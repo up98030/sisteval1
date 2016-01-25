@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <h:head>
+        <title>JSF 2.0 Hello World</title>
+    </h:head>
+    <h:body>
+    	<h2>JSF 2.0 Hello World Example - hello.xhtml</h2>
+    	    		<h:outputText value="#{helloWorld.hola}" ></h:outputText>
+    	
+    	<h:form>
+    	   <h:inputText value="#{helloWorld.name}"></h:inputText>
+    	   <h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
+    	   <br />
+    	   <h:commandButton value="Cambiar" action="#{helloWorld.cambiar}"></h:commandButton>
+    	   <h:commandButton value="Select" action="#{util.select}"></h:commandButton>
+    	   <h:commandButton value="SelectStudent" action="#{util.selectStudent}"></h:commandButton>
+    	   
+    	   <a href="login/login.xhtml">index</a>    	
+    	   <br />
+    	   <a href="index.jsp"><p:button value="Bookmark" icon="ui-icon-star" action="#{helloWorld.cambiar}" disabled="false">
+			</p:button> </a>  
+    	</h:form>
+    </h:body>
+</html>

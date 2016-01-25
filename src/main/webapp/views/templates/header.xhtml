@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" >
+   
+   <link href="../resources/css/style.css" rel="stylesheet" type="text/css"/>
+   <style>
+   .headerMenu{
+	margin:auto;
+	padding:20px 15%;
+	width:100%;
+	text-align:center;	
+	border-bottom:2px solid #12457a;
+	background-color:#12457a;
+	color:white;
+	
+}
+.headerMenu .item{
+	border:1px solid;
+}
+   </style>
+   <body>
+      <ui:composition>  	
+      <b:row styleClass="headerMenu">
+      	<b:column span="3"><a href="#">Inicio</a></b:column>
+      	<b:column span="3"><a href="#">Mis Módulos</a></b:column>
+      	<b:column span="3"><a href="#">Mis Tareas</a></b:column>
+      	<b:column span="3"><a href="#">Salir</a></b:column>
+      </b:row>
+<!--         <b:row styleClass="headerMenu"> 
+	       	<b:column span="3"><h:link value="Inicio" outcome="profesor" style="color:white;" /></b:column>
+	       	<b:column span="3"><h:link value="Mis Módulos" outcome="modulos" style="color:white;" /></b:column>
+	       	<b:column span="3"><h:link value="Mis Tareas" outcome="tareas" style="color:white;"/></b:column>
+	       	<b:column span="3"><h:link value="Salir" outcome="login" style="color:white;"/></b:column>
+       </b:row> -->
+      </ui:composition>	
+   </body>
+</html>
