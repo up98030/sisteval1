@@ -12,14 +12,24 @@
     </h:head>
     <h:body>
     	<h2>Tareas</h2>
-    	
-    	<p:dataList value="#{util.tarea}" var="tarea" type="unordered">
+<!--     	<p:dataTable id="eventsDT" var="car" value="#{dtSelectionView.cars3}" selectionMode="single" selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
+ -->    <h:form id="form">
+     <p:growl id="msgs" showDetail="true" />
+ 
+    	<p:dataTable id="tareasDT" value="#{util.tarea}" var="tarea" selectionMode="single" selection="#{util.tareaSelect}" rowKey="#{tarea.idTarea}">
+	        <p:ajax event="rowSelect" listener="#{util.tareaSelected}"  update=":form:msgs"/>
+	        <p:ajax event="rowUnselect" listener="#{util.tareaUnselected}" update=":form:msgs" />
+        
+	        <p:column headerText="Mis Tareas">
+	        	<h:outputText value="#{tarea.nombreTarea}" />
+	    	</p:column>
+        <!-- 
         <f:facet name="header">
             Mis Tareas
         </f:facet>
-        <!-- #{tarea.nombreTarea},#{tarea.descripcionTarea},#{tarea.fechaInicio},#{tarea.fechaFin} -->
-        #{tarea.nombreTarea}
-    </p:dataList>
-
+        #{tarea.nombreTarea},#{tarea.descripcionTarea},#{tarea.fechaInicio},#{tarea.fechaFin}
+        #{tarea.nombreTarea} -->
+    </p:dataTable>
+</h:form>
     </h:body>
 </html>

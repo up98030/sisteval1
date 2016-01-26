@@ -1,44 +1,23 @@
-<!DOCTYPE html>
-<html lang="en"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:p="http://primefaces.org/ui" 
-	xmlns:ui="http://java.sun.com/jsf/facelets" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 	
-	
-	<h:outputStylesheet library="css" name="style.css"  />
-	
-	<h:head>
-		<title>Tarea</title>
-	</h:head>
-	<h:body>		
-       <ui:composition template="templates/common.xhtml">		
-         <ui:define name="content">              
-	       <b:row styleClass="">       	
-	       	<b:column span="12" style="margin-left:10px;">
-	       		<h2>Cronograma Ingeniería de Software</h2>
-	       		<h:form enctype="multipart/form-data">
-				    <p:growl id="messages" showDetail="true" />
-				 
-				    <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
-				 
-				    <p:commandButton value="Subir" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" />
-				</h:form>
-				
-				<h:form>               
-				    <h3 style="margin-top: 0">Observaciones</h3>
-				    <p>Ingrese las novedades de su cronograma</p>
-				    <p:inputTextarea rows="10" cols="50" completeMethod="#{inputTextareaView.completeArea}" queryDelay="750" minQueryLength="4" />
-				    <h3 style="margin-top: 0">Calificación Total:</h3>				   
-				</h:form>
-				<p:commandButton value="Enviar" action="profesor" style="margin-top:10px;" />
-		
-				
-	       	</b:column>
-	       </b:row>
-	      </ui:define>
-	     </ui:composition>
-   	</h:body>
+    <h:head>
+        <title>Tarea</title>
+    </h:head>
+    <h:body>
+    	<h2>Tarea</h2>
+ 
+    <h:outputText value="#{util.nombreTarea}" ></h:outputText>
+    <br />
+    <h:outputText value="#{util.idTarea}" ></h:outputText>
+    <br />
+     <h:outputText value="#{util.descripcionTarea}" ></h:outputText>
+ 
+    </h:body>
 </html>
