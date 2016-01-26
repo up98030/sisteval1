@@ -2,4 +2,9 @@ entity\TareasEntity.class
 ec\com\ups\sistEval1\HelloWorld.class
 entity\StudentEntity.class
 util\TareasSelectUtil.class
+util\TareasInsertUtil.class
+ec\com\data\vo\TareaVo.class
+util\HibernateUtil.class
+util\TareasUpdateUtil.class
+util\TareasDeleteUtil.class
 ec\com\ups\sistEval1\App.class
