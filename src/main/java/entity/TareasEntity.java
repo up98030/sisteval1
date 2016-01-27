@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,6 +15,7 @@ public class TareasEntity {
 
     @Id
     @Column(name = "IDTAREA")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idTarea;
 
     @Column(name = "NOMBRETAREA")
@@ -20,8 +23,7 @@ public class TareasEntity {
     
     @Column(name = "DESCRIPCIONTAREA")
     private String descripcionTarea;
-    
-    
+        
     @Column(name = "FECHAINICIO")
     private Date fechaInicio;
     

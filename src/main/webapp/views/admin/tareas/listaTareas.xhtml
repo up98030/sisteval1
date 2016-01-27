@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <h:head>
+        <title>Tareas</title>
+    </h:head>
+    <h:body>
+    	<h2>Tareas Enviadas</h2>
+<!--     	<p:dataTable id="eventsDT" var="car" value="#{dtSelectionView.cars3}" selectionMode="single" selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
+ -->    <h:form id="form">
+     <p:growl id="msgs" showDetail="true" />
+ 
+    	<p:dataTable id="tareasDT" value="#{tareasEnviadasUtil.tarea}" var="tarea" selectionMode="single" selection="#{util.tareaSelect}" rowKey="#{tarea.idTarea}">
+	        <p:ajax event="rowSelect" listener="#{util.tareaSelected}"  update=":form:msgs"/>
+	        <p:ajax event="rowUnselect" listener="#{util.tareaUnselected}" update=":form:msgs" />
+        	
+	        <p:column headerText="Nombre Tarea">
+	        	<h:outputText value="#{tarea.nombreTarea}" />
+	    	</p:column>
+	    	<p:column headerText="Fecha Inicio">
+	        	<h:outputText value="#{tarea.fechaInicio}" />
+	    	</p:column>
+	    	<p:column headerText="Fecha Fin">
+	        	<h:outputText value="#{tarea.fechaFin}" />
+	    	</p:column>
+	    	<p:column headerText="Profesor">
+	        	<h:outputText value="#{tarea.idProfesor}" />
+	    	</p:column>
+	    	<p:column headerText="Modulo">
+	        	<h:outputText value="#{tarea.idModulo}" />
+	    	</p:column>
+	    	
+        <!-- 
+        <f:facet name="header">
+            Mis Tareas
+        </f:facet>
+        #{tarea.nombreTarea},#{tarea.descripcionTarea},#{tarea.fechaInicio},#{tarea.fechaFin}
+        #{tarea.nombreTarea} -->
+    </p:dataTable>
+</h:form>
+    </h:body>
+</html>

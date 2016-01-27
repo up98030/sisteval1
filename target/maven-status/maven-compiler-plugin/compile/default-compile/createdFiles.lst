@@ -1,6 +1,7 @@
 entity\TareasEntity.class
 ec\com\ups\sistEval1\HelloWorld.class
 entity\StudentEntity.class
+adminUtil\TareasEnviadasUtil.class
 util\TareasSelectUtil.class
 util\TareasInsertUtil.class
 ec\com\data\vo\TareaVo.class

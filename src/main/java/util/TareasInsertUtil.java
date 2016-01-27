@@ -13,7 +13,18 @@ import entity.TareasEntity;
 @SessionScoped
 public class TareasInsertUtil {
 
-	/*public static void main(String[] args) {
+	
+    private Date date1;
+	
+	public Date getDate1() {
+		return date1;
+	}
+
+	public void setDate1(Date date1) {
+		this.date1 = date1;
+	}
+
+		/*public static void main(String[] args) {
 		
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");		 
 		
@@ -45,24 +56,24 @@ public class TareasInsertUtil {
 	
 
 }*/
-		public void insertarTarea(){
+		public void insertarTarea(String nombre, String descripcion, Date fechaFinTarea){
 			
-			System.out.println("INSERTANDO TAREA...");
+			System.out.println("INSERTANDO TAREA..." + fechaFinTarea);
 			//System.out.println("Parametro: " + input);
 			Session session = HibernateUtil.getSessionFactory().openSession();
 	        session.beginTransaction();
 	        
 	        TareasEntity tareasEntity = new TareasEntity();
 
-	        tareasEntity.setIdTarea(35L);        
-	        tareasEntity.setNombreTarea("Tarea de Prueba1");
+	        //tareasEntity.setIdTarea(3295L);        
+	        tareasEntity.setNombreTarea(nombre);
 	        tareasEntity.setFechaInicio(new Date());
-	        tareasEntity.setFechaFin(new Date());
+	        tareasEntity.setFechaFin(fechaFinTarea);
 	        tareasEntity.setEstado("ACT");
-	        tareasEntity.setDescripcionTarea("Es la primera tarea de prueba de hibernate");
+	        tareasEntity.setDescripcionTarea(descripcion);
 	        tareasEntity.setArchivoAdjunto("Archivo1.pdf");
-	        tareasEntity.setArchivo("Archivo subido.pdf");
-	        tareasEntity.setObservaciones("Observaciones de la tarea1");
+	        //tareasEntity.setArchivo("Archivo subido.pdf");
+	        //tareasEntity.setObservaciones("Observaciones de la tarea1");
 	        tareasEntity.setIdModulo(74477);
 	        tareasEntity.setIdProfesorCreador(4494);
 	        tareasEntity.setIdProfesor(111);
@@ -73,7 +84,7 @@ public class TareasInsertUtil {
 	 
 	        //Commit the transaction
 	        session.getTransaction().commit();
-	        HibernateUtil.shutdown();
+	       // HibernateUtil.shutdown();
 			
 		}
 		

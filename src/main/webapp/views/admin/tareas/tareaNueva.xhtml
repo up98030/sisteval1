@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <h:head>
+        <title>Tarea</title>
+    </h:head>
+    <h:body>
+    	<h2>Tarea Nueva</h2>
+
+     <h:form>
+     	<br/>
+     	<h3>Nombre Tarea</h3>
+     	<p:inputText id="user" value="#{theUserName}"  p:placeholder="Nombre de la tarea" binding="#{nombreTarea}" style="margin-bottom:10px;"/><br/>
+		<h3>Descripción Tarea</h3>
+		<br/>
+		<p:inputTextarea rows="10" cols="50" binding="#{descripcionTarea}" style="margin-bottom:10px;"/>
+		<h3>Fecha Fin Tarea</h3>
+		<br/>
+		<p:calendar id="fechaFin" value="#{tareasInsertUtil.date1}" mode="inline" binding="#{fechaFinTarea}" />
+		
+     	<h:commandButton value="Crear" action="#{tareasInsertUtil.insertarTarea(nombreTarea.value, descripcionTarea.value,fechaFinTarea.value)}"></h:commandButton>
+     </h:form>
+    </h:body>
+</html>
