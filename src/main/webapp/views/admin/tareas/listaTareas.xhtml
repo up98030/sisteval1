@@ -16,10 +16,10 @@
  -->    <h:form id="form">
      <p:growl id="msgs" showDetail="true" />
  
-    	<p:dataTable id="tareasDT" value="#{tareasEnviadasUtil.tarea}" var="tarea" selectionMode="single" selection="#{util.tareaSelect}" rowKey="#{tarea.idTarea}">
-	        <p:ajax event="rowSelect" listener="#{util.tareaSelected}"  update=":form:msgs"/>
-	        <p:ajax event="rowUnselect" listener="#{util.tareaUnselected}" update=":form:msgs" />
-        	
+    	<p:dataTable id="tareasDT" value="#{tareasEnviadasUtil.tarea}" var="tarea" selectionMode="single" selection="#{util.tareaSelect}" rowKey="#{tarea.idTarea}">	      
+    	<p:ajax event="rowSelect" listener="#{calificarTareaUtil.selectTareaCalificar}"  update=":form:msgs"/>
+	        <p:ajax event="rowUnselect" listener="#{calificarTareaUtil.tareaUnselected}" update=":form:msgs" />
+	                  	
 	        <p:column headerText="Nombre Tarea">
 	        	<h:outputText value="#{tarea.nombreTarea}" />
 	    	</p:column>
@@ -29,19 +29,15 @@
 	    	<p:column headerText="Fecha Fin">
 	        	<h:outputText value="#{tarea.fechaFin}" />
 	    	</p:column>
+	    	<p:column headerText="Comentario">
+	        	<h:outputText value="#{tarea.observaciones}" />
+	    	</p:column>
 	    	<p:column headerText="Profesor">
 	        	<h:outputText value="#{tarea.idProfesor}" />
 	    	</p:column>
 	    	<p:column headerText="Modulo">
 	        	<h:outputText value="#{tarea.idModulo}" />
 	    	</p:column>
-	    	
-        <!-- 
-        <f:facet name="header">
-            Mis Tareas
-        </f:facet>
-        #{tarea.nombreTarea},#{tarea.descripcionTarea},#{tarea.fechaInicio},#{tarea.fechaFin}
-        #{tarea.nombreTarea} -->
     </p:dataTable>
 </h:form>
     </h:body>

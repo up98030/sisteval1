@@ -11,7 +11,7 @@
         <title>Tareas</title>
     </h:head>
     <h:body>
-    	<h2>Tareas</h2>
+    	<h2>Mis Tareas</h2>
 <!--     	<p:dataTable id="eventsDT" var="car" value="#{dtSelectionView.cars3}" selectionMode="single" selection="#{dtSelectionView.selectedCar}" rowKey="#{car.id}">
  -->    <h:form id="form">
      <p:growl id="msgs" showDetail="true" />
@@ -20,8 +20,11 @@
 	        <p:ajax event="rowSelect" listener="#{util.tareaSelected}"  update=":form:msgs"/>
 	        <p:ajax event="rowUnselect" listener="#{util.tareaUnselected}" update=":form:msgs" />
         
-	        <p:column headerText="Mis Tareas">
+	        <p:column headerText="Nombre Tarea">
 	        	<h:outputText value="#{tarea.nombreTarea}" />
+	    	</p:column>
+	    	<p:column headerText="Fecha Límite">
+	        	<h:outputText value="#{tarea.fechaFin}" />
 	    	</p:column>
         <!-- 
         <f:facet name="header">

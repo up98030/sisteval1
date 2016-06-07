@@ -1,7 +1,9 @@
+D:\WorkspaceSistEval\sistEval1\src\main\java\controllers\TareasController.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\TareaVo.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\entity\TareasEntity.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\util\TareasInsertUtil.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\util\TareasSelectUtil.java
+D:\WorkspaceSistEval\sistEval1\src\main\java\adminUtil\CalificarTareaUtil.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\util\HibernateUtil.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\ups\sistEval1\App.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\ups\sistEval1\HelloWorld.java

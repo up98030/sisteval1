@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+import org.primefaces.model.UploadedFile;
 
 import entity.TareasEntity;
 
@@ -20,8 +21,9 @@ import entity.TareasEntity;
 @SessionScoped
 public class TareasUpdateUtil {		
 	
-	public void enviarTarea(){
+	public void enviarTarea(String observaciones){
 		
+					
 		System.out.println("Actualizando Tarea....");
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
@@ -44,7 +46,7 @@ public class TareasUpdateUtil {
         tareasEntity.setDescripcionTarea(TareasSelectUtil.descripcionTarea);
         tareasEntity.setArchivoAdjunto("Archivo1.pdf");
         tareasEntity.setArchivo("Archivo subido.pdf");
-        tareasEntity.setObservaciones("Observaciones de la tarea1");
+        tareasEntity.setObservaciones(observaciones);
         tareasEntity.setIdModulo(74477);
         tareasEntity.setIdProfesorCreador(4494);
         tareasEntity.setIdProfesor(111);

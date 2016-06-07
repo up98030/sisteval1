@@ -29,10 +29,8 @@ public class TareasSelectUtil {
     public static String nombreTarea;
     public static Long idTarea;       
     public static String descripcionTarea;
-    
-    public void updateTarea(){
-    	System.out.println("ACTUALIZANDO TAREA....");
-    }
+    public static String comentarioTarea;
+        
 
 	public List<TareaVo> getTarea() {
 		
@@ -75,7 +73,7 @@ public class TareasSelectUtil {
 		nombreTarea = ((TareasEntity) event.getObject()).getNombreTarea();
 		idTarea = ((TareasEntity) event.getObject()).getIdTarea();
 		descripcionTarea = ((TareasEntity) event.getObject()).getDescripcionTarea();
-		
+		comentarioTarea =((TareasEntity) event.getObject()).getObservaciones();
 		
 		FacesMessage msg = new FacesMessage("Tarea Seleccionada", ((TareasEntity) event.getObject()).getNombreTarea());
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -122,6 +120,20 @@ public class TareasSelectUtil {
 	     session.close();
 	     sf.close();
 	}
+	
+
+    
+    public static String getComentarioTarea() {
+		return comentarioTarea;
+	}
+
+	public static void setComentarioTarea(String comentarioTarea) {
+		TareasSelectUtil.comentarioTarea = comentarioTarea;
+	}
+
+	public void updateTarea(){
+    	System.out.println("ACTUALIZANDO TAREA....");
+    }
 		
 	public String getDescripcionTarea() {
 		return descripcionTarea;

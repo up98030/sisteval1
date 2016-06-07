@@ -11,15 +11,19 @@
         <title>Tarea</title>
     </h:head>
     <h:body>
-    	<h2>Tarea</h2>
- 
-    <h:outputText value="#{util.nombreTarea}" ></h:outputText>
-    <br />
-    <h:outputText value="#{util.idTarea}" ></h:outputText>
-    <br />
-     <h:outputText value="#{util.descripcionTarea}" ></h:outputText>
+    	<h2><h:outputText value="#{util.nombreTarea}" ></h:outputText></h2>   
+    <br />    
+    	<div sytle="width:200px; border:1px solid;">
+     <h:outputText value="#{util.descripcionTarea}" style="font-size:18px;"></h:outputText>
+     </div>
      <h:form>
-     	<h:commandButton value="Enviar" action="#{updateUtil.enviarTarea}"></h:commandButton>
+     	 <h3>Seleccionar Archivo</h3>    
+	     <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+	     <br />
+	     <h3>Observaciones</h3>
+    	<p:inputTextarea rows="10" cols="50" binding="#{observacionTarea}" />
+    	 <br />
+     	<h:commandButton value="Enviar" action="#{updateUtil.enviarTarea(observacionTarea.value)}"></h:commandButton>
      </h:form>
     </h:body>
 </html>

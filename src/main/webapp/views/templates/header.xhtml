@@ -9,23 +9,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" >
    
-   <link href="../resources/css/style.css" rel="stylesheet" type="text/css"/>
-   <style>
-   .headerMenu{
-	margin:auto;
-	padding:20px 15%;
-	width:100%;
-	text-align:center;	
-	border-bottom:2px solid #12457a;
-	background-color:#12457a;
-	color:white;
-	
-}
-.headerMenu .item{
-	border:1px solid;
-}
-   </style>
-   <body>
+   <h:head>      
+   	<h:outputStylesheet name="style.css" />
+   </h:head>
+   
+
+   <h:body style="padding:10px;">
       <ui:composition>  	
       <b:row styleClass="headerMenu">
       	<b:column span="3"><a href="#">Inicio</a></b:column>
@@ -40,5 +29,22 @@
 	       	<b:column span="3"><h:link value="Salir" outcome="login" style="color:white;"/></b:column>
        </b:row> -->
       </ui:composition>	
-   </body>
+   </h:body>
+   
+      <style>
+   .headerMenu{
+	margin:auto;
+	padding:20px 15%;
+	width:100%;
+	text-align:center;	
+	border-bottom:2px solid #12457a;
+	background-color:#12457a;
+	color:white;
+	
+}
+.headerMenu .item{
+	border:1px solid;
+}
+   </style>
+   
 </html>
