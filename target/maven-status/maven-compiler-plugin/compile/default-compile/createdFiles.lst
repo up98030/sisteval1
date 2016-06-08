@@ -8,6 +8,7 @@ util\TareasInsertUtil.class
 controllers\TareasController.class
 ec\com\data\vo\TareaVo.class
 util\HibernateUtil.class
+entity\UsuariosEntity.class
 util\TareasUpdateUtil.class
 util\TareasDeleteUtil.class
 ec\com\ups\sistEval1\App.class
