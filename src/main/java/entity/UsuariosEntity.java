@@ -6,24 +6,47 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USUARIOS")
+@Table(name = "usuarios")
 public class UsuariosEntity {
 
 	@Id
-    @Column(name = "IDUSUARIO")
+    @Column(name = "idusuario")
     private int idUsuario;
     
-    @Column(name = "USERNOM")
+    @Column(name = "usernom")
     private String usernom;
     
-    @Column(name = "USERPWD")
+    @Column(name = "userpwd")
     private String userpwd;
     
-    @Column(name = "NOMBRES")
+    @Column(name = "nombres")
     private String nombres;
     
-    @Column(name = "APELLIDOS")
+    @Column(name = "apellidos")
     private String apellidos;
+    
+    @Column(name = "userrol")
+    private Integer userrol;
+    
+    @Column(name = "estado")
+    private String estado;
+    
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Integer getUserrol() {
+		return userrol;
+	}
+
+	public void setUserrol(Integer userrol) {
+		this.userrol = userrol;
+	}
 
 	public int getIdUsuario() {
 		return idUsuario;

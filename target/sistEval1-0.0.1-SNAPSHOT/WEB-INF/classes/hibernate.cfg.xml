@@ -24,5 +24,7 @@
         <!-- Map Entity Class -->
     	<mapping class="entity.TareasEntity"></mapping>
 		<mapping class="entity.StudentEntity"></mapping>
+		<mapping class="entity.UsuariosEntity"></mapping>
+		
 	</session-factory>
 </hibernate-configuration>

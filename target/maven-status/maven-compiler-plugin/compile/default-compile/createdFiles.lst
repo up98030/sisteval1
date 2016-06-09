@@ -3,11 +3,14 @@ ec\com\ups\sistEval1\HelloWorld.class
 entity\StudentEntity.class
 adminUtil\TareasEnviadasUtil.class
 adminUtil\CalificarTareaUtil.class
+controllers\UsuariosController.class
 util\TareasSelectUtil.class
 util\TareasInsertUtil.class
 controllers\TareasController.class
 ec\com\data\vo\TareaVo.class
 util\HibernateUtil.class
+controllers\LoginController.class
+ec\com\data\vo\UsuariosVo.class
 entity\UsuariosEntity.class
 util\TareasUpdateUtil.class
 util\TareasDeleteUtil.class

@@ -2,8 +2,6 @@ package controllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 
 import ec.com.data.vo.TareaVo;
+import ec.com.data.vo.UsuariosVo;
 
 @Controller
 @RequestMapping("/ws")
 public class TareasController {
 	
 	@RequestMapping(value = "/tareas/", method = RequestMethod.GET)
-	public ResponseEntity<String> listAllUsers() {
+	public ResponseEntity<String> listAllTareas() {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 		 
 	     ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
@@ -53,26 +52,6 @@ public class TareasController {
 	     sf.close();
 				
 		return new ResponseEntity<String>(json, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/login/", method = RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestBody String usernom, String userpwd){
-		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
-		
-		ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
-	     srb.applySettings(cf.getProperties());
-	     ServiceRegistry sr = srb.buildServiceRegistry();
-	     SessionFactory sf = cf.buildSessionFactory(sr);
-
-	     Session session = sf.openSession();
-	     //TareasEntity std = (TareasEntity) session.load(TareasEntity.class, new Long(2));
-	     
-	     String hql = "FROM entity.UsuariosEntity usuarios where usuarios.usernom =" + usernom +" and usuarios.userpwd =" + userpwd;
-	     Query query = session.createQuery(hql);
-	     
-		
-		String logueado = "OK";
-		return new ResponseEntity<String>(logueado, HttpStatus.OK);
 	}
 
 }
