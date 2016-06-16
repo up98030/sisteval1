@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,8 +25,13 @@ import ec.com.data.vo.UsuariosVo;
 public class UsuariosController {
 	
 	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET)
-	public ResponseEntity<String> listAllUsers() {
+	public ResponseEntity<String> listAllUsers(HttpServletResponse response) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+		
+		response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		 
 	     ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
 	     srb.applySettings(cf.getProperties());

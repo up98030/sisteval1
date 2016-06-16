@@ -2,6 +2,7 @@ entity\TareasEntity.class
 ec\com\ups\sistEval1\HelloWorld.class
 entity\StudentEntity.class
 adminUtil\TareasEnviadasUtil.class
+ec\com\data\vo\UserDataVo.class
 adminUtil\CalificarTareaUtil.class
 controllers\UsuariosController.class
 util\TareasSelectUtil.class
@@ -10,6 +11,7 @@ controllers\TareasController.class
 ec\com\data\vo\TareaVo.class
 util\HibernateUtil.class
 controllers\LoginController.class
+util\CORSFilter.class
 ec\com\data\vo\UsuariosVo.class
 entity\UsuariosEntity.class
 util\TareasUpdateUtil.class
