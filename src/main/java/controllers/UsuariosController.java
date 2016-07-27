@@ -47,16 +47,15 @@ public class UsuariosController {
 	     
 	     String hql = "SELECT usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT'";
 	     Query query = session.createQuery(hql);
-	     List<UsuariosVo> tarea;
+	     List<UsuariosVo> usuarios;
 	     List results = query.list();
-	     tarea = query.list();
-	     String json = new Gson().toJson(tarea);
+	     usuarios = query.list();
+	     String json = new Gson().toJson(usuarios);
 
 
 //	     System.out.println("Loaded object Student name is: " + std.getNombreTarea());
 //	     System.out.println("LOS RESULTADOS SON: " + results);
 	     
-	     System.out.println("Object Loaded successfully.....!!");
 	     session.close();
 	     sf.close();
 				
@@ -86,7 +85,7 @@ public class UsuariosController {
         session.beginTransaction();
         
         UsuariosEntity usuariosEntity = new UsuariosEntity();
-
+/*
         usuariosEntity.setIdUsuario(idUsuario);
         usuariosEntity.setUsernom(usernom);
         usuariosEntity.setUserpwd(userpwd);
@@ -94,7 +93,7 @@ public class UsuariosController {
         usuariosEntity.setApellidos(apellidos);
         usuariosEntity.setUserrol(userrol);
         usuariosEntity.setEstado("ACT");
-                     
+                     */
         //Save the employee in database
         session.save(usuariosEntity);
  

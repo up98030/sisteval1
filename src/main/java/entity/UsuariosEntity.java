@@ -6,47 +6,34 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "Usuarios")
 public class UsuariosEntity {
 
 	@Id
-    @Column(name = "idusuario")
+    @Column(name = "idUsuario")
     private int idUsuario;
     
-    @Column(name = "usernom")
-    private String usernom;
+    @Column(name = "nombreUsuario")
+    private String nombreUsuario;
     
-    @Column(name = "userpwd")
-    private String userpwd;
+    @Column(name = "correoUsuario")
+    private String correoUsuario;
     
-    @Column(name = "nombres")
-    private String nombres;
+    @Column(name = "password")
+    private String password;
     
-    @Column(name = "apellidos")
-    private String apellidos;
+    @Column(name = "nombreCompletoUsuario")
+    private String nombreCompleto;
     
-    @Column(name = "userrol")
-    private Integer userrol;
+    @Column(name = "idPerfil")
+    private int idPerfil;
     
     @Column(name = "estado")
     private String estado;
     
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public Integer getUserrol() {
-		return userrol;
-	}
-
-	public void setUserrol(Integer userrol) {
-		this.userrol = userrol;
-	}
+    @Column(name = "idModulo")
+    private int idModulo;
+    
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -56,38 +43,60 @@ public class UsuariosEntity {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getUsernom() {
-		return usernom;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
 
-	public void setUsernom(String usernom) {
-		this.usernom = usernom;
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 
-	public String getUserpwd() {
-		return userpwd;
+	public String getCorreoUsuario() {
+		return correoUsuario;
 	}
 
-	public void setUserpwd(String userpwd) {
-		this.userpwd = userpwd;
+	public void setCorreoUsuario(String correoUsuario) {
+		this.correoUsuario = correoUsuario;
 	}
 
-	public String getNombres() {
-		return nombres;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getApellidos() {
-		return apellidos;
+	public String getNombreCompleto() {
+		return nombreCompleto;
 	}
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
-    
-    
-    
+
+	public int getIdPerfil() {
+		return idPerfil;
+	}
+
+	public void setIdPerfil(int idPerfil) {
+		this.idPerfil = idPerfil;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public int getIdModulo() {
+		return idModulo;
+	}
+
+	public void setIdModulo(int idModulo) {
+		this.idModulo = idModulo;
+	}
+	
 }

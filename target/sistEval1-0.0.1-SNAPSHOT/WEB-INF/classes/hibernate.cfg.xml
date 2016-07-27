@@ -6,10 +6,10 @@
 
 	<session-factory>
 
-        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/SISTEVALUPS</property>
-        <property name="connection.username">postgres</property>
+        <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/SISTEMAEVALUACION</property>
+        <property name="connection.username">root</property>
         <property name="connection.password">admin</property>        
 
         <property name="connection_pool_size">1</property>
@@ -25,6 +25,8 @@
     	<mapping class="entity.TareasEntity"></mapping>
 		<mapping class="entity.StudentEntity"></mapping>
 		<mapping class="entity.UsuariosEntity"></mapping>
+		<mapping class="entity.ModulosEntity"></mapping>
+		<mapping class="entity.TareasUsuariosEntity"></mapping>
 		
 	</session-factory>
 </hibernate-configuration>

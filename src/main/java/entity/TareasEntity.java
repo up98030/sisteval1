@@ -14,15 +14,27 @@ import javax.persistence.Table;
 public class TareasEntity {
 
     @Id
-    @Column(name = "IDTAREA")
+    @Column(name = "idTarea")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idTarea;
+    private int idTarea;
 
-    @Column(name = "NOMBRETAREA")
+    @Column(name = "nombreTarea")
     private String nombreTarea;
     
-    @Column(name = "DESCRIPCIONTAREA")
+    @Column(name = "descripcionTarea")
     private String descripcionTarea;
+    
+    @Column(name = "IDMODULO")
+    private Integer idModulo;
+    
+    @Column(name = "tipoTarea")
+    private String tipoTarea;
+    
+    @Column(name = "idCreadorTarea")
+    private Integer idCreadorTarea;
+    
+    @Column(name = "ESTADO")
+    private String estado;
         
     @Column(name = "FECHAINICIO")
     private Date fechaInicio;
@@ -33,26 +45,24 @@ public class TareasEntity {
     @Column(name = "ARCHIVOADJUNTO")
     private String archivoAdjunto;
     
-    @Column(name = "ESTADO")
-    private String estado;
-    
-    @Column(name = "OBSERVACIONES")
-    private String observaciones;
-    
-    @Column(name = "ARCHIVO")
-    private String archivo;
-    
-    @Column(name = "CALIFICACION")
-    private Integer calificacion;
-    
-    @Column(name = "IDMODULO")
-    private Integer idModulo;
-    
-    @Column(name = "IDPROFESORCREADOR")
-    private Integer idProfesorCreador;
-    
-    @Column(name = "IDPROFESOR")
-    private Integer idProfesor;       
+    @Column(name = "idCriterio")
+    private int idCriterio;
+
+	public int getIdTarea() {
+		return idTarea;
+	}
+
+	public void setIdTarea(int idTarea) {
+		this.idTarea = idTarea;
+	}
+
+	public String getNombreTarea() {
+		return nombreTarea;
+	}
+
+	public void setNombreTarea(String nombreTarea) {
+		this.nombreTarea = nombreTarea;
+	}
 
 	public String getDescripcionTarea() {
 		return descripcionTarea;
@@ -62,20 +72,28 @@ public class TareasEntity {
 		this.descripcionTarea = descripcionTarea;
 	}
 
-	public Long getIdTarea() {
-		return idTarea;
+	public Integer getIdModulo() {
+		return idModulo;
 	}
 
-	public void setIdTarea(Long idTarea) {
-		this.idTarea = idTarea;
+	public void setIdModulo(Integer idModulo) {
+		this.idModulo = idModulo;
 	}
 
-	public String getNombreTarea() {
-		return nombreTarea;
+	public Integer getIdCreadorTarea() {
+		return idCreadorTarea;
 	}
 
-	public void setNombreTarea(String nombre) {
-		this.nombreTarea = nombre;
+	public void setIdCreadorTarea(Integer idCreadorTarea) {
+		this.idCreadorTarea = idCreadorTarea;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public Date getFechaInicio() {
@@ -102,61 +120,20 @@ public class TareasEntity {
 		this.archivoAdjunto = archivoAdjunto;
 	}
 
-	public String getEstado() {
-		return estado;
+	public int getIdCriterio() {
+		return idCriterio;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setIdCriterio(int idCriterio) {
+		this.idCriterio = idCriterio;
 	}
 
-	public String getObservaciones() {
-		return observaciones;
+	public String getTipoTarea() {
+		return tipoTarea;
 	}
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
-
-	public String getArchivo() {
-		return archivo;
-	}
-
-	public void setArchivo(String archivo) {
-		this.archivo = archivo;
-	}
-
-	public Integer getCalificacion() {
-		return calificacion;
-	}
-
-	public void setCalificacion(Integer calificacion) {
-		this.calificacion = calificacion;
-	}
-
-	public Integer getIdModulo() {
-		return idModulo;
-	}
-
-	public void setIdModulo(Integer idModulo) {
-		this.idModulo = idModulo;
-	}
-
-	public Integer getIdProfesorCreador() {
-		return idProfesorCreador;
-	}
-
-	public void setIdProfesorCreador(Integer idProfesorCreador) {
-		this.idProfesorCreador = idProfesorCreador;
-	}
-
-	public Integer getIdProfesor() {
-		return idProfesor;
-	}
-
-	public void setIdProfesor(Integer idProfesor) {
-		this.idProfesor = idProfesor;
+	public void setTipoTarea(String tipoTarea) {
+		this.tipoTarea = tipoTarea;
 	}
 	
-    
 }

@@ -66,13 +66,13 @@ public class CalificarTareaUtil {
 		} catch(Exception e){
 			System.out.println("No se puede redireccionar");
 		}
-		nombreTareacalif = ((TareasEntity) event.getObject()).getNombreTarea();
-		idTarea = ((TareasEntity) event.getObject()).getIdTarea();
+		/*nombreTareacalif = ((TareasEntity) event.getObject()).getNombreTarea();
+		//idTarea = ((TareasEntity) event.getObject()).getIdTarea();
 		descripcionTareacalif = ((TareasEntity) event.getObject()).getDescripcionTarea();
-		comentarioTarea =((TareasEntity) event.getObject()).getObservaciones();
+		//comentarioTarea =((TareasEntity) event.getObject()).getObservaciones();
 		
 		FacesMessage msg = new FacesMessage("Tarea Seleccionada", ((TareasEntity) event.getObject()).getNombreTarea());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage(null, msg);*/
 	}
 	
 }
