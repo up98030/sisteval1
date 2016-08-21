@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author M1155
+ *
+ */
 @Entity
 @Table(name = "TAREAS")
 public class TareasEntity {
@@ -45,8 +49,8 @@ public class TareasEntity {
     @Column(name = "ARCHIVOADJUNTO")
     private String archivoAdjunto;
     
-    @Column(name = "idCriterio")
-    private int idCriterio;
+    @Column(name = "Criterios")
+    private String criterios;
 
 	public int getIdTarea() {
 		return idTarea;
@@ -120,12 +124,12 @@ public class TareasEntity {
 		this.archivoAdjunto = archivoAdjunto;
 	}
 
-	public int getIdCriterio() {
-		return idCriterio;
+	public String getCriterios() {
+		return criterios;
 	}
 
-	public void setIdCriterio(int idCriterio) {
-		this.idCriterio = idCriterio;
+	public void setCriterios(String criterios) {
+		this.criterios = criterios;
 	}
 
 	public String getTipoTarea() {

@@ -24,10 +24,13 @@ public class CriteriosEntity {
     @Column(name = "estado")
     private String estado;
     
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="idCriterio", referencedColumnName="idCriterio")
-    Collection<CatalogoCriterioEntity> catalogoCriterio;
-
+    @Column(name = "valorCriterio")
+    private String valorCriterio;
+    
+    @Column(name = "descripcionCriterio")
+    private String descripcionCriterio;
+    
+    
 	public int getIdCriterio() {
 		return idCriterio;
 	}
@@ -52,16 +55,20 @@ public class CriteriosEntity {
 		this.estado = estado;
 	}
 
-	public Collection<CatalogoCriterioEntity> getCatalogoCriterio() {
-		return catalogoCriterio;
+	public String getValorCriterio() {
+		return valorCriterio;
 	}
 
-	public void setCatalogoCriterio(Collection<CatalogoCriterioEntity> catalogoCriterio) {
-		this.catalogoCriterio = catalogoCriterio;
+	public void setValorCriterio(String valorCriterio) {
+		this.valorCriterio = valorCriterio;
 	}
-	
-	
-    
-    
+
+	public String getDescripcionCriterio() {
+		return descripcionCriterio;
+	}
+
+	public void setDescripcionCriterio(String descripcionCriterio) {
+		this.descripcionCriterio = descripcionCriterio;
+	}
 
 }

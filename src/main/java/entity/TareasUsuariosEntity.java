@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,13 @@ public class TareasUsuariosEntity {
 	 
 	 @Column(name = "idTarea")
 	 private int idTarea;
+	 
+	 @ManyToOne
+	 @JoinColumn(name="idTarea",referencedColumnName="idTarea", insertable = false, updatable = false)
+	 TareasEntity tareasEntity;
+	 
+	 /*@Column(name = "idTarea")
+	 private int idTarea;*/
 	 
 	 @Column(name = "ObservacionesDocente")
 	 private String ObservacionesDocente;
@@ -52,13 +62,6 @@ public class TareasUsuariosEntity {
 		this.idUsuario = idUsuario;
 	}
 
-	public int getIdTarea() {
-		return idTarea;
-	}
-
-	public void setIdTarea(int idTarea) {
-		this.idTarea = idTarea;
-	}
 
 	public String getObservacionesDocente() {
 		return ObservacionesDocente;
@@ -67,6 +70,14 @@ public class TareasUsuariosEntity {
 	public void setObservacionesDocente(String observacionesDocente) {
 		ObservacionesDocente = observacionesDocente;
 	}
+	
+	public TareasEntity getTareasEntity() {
+		return tareasEntity;
+	}
+
+	public void setTareasEntity(TareasEntity tareasEntity) {
+		this.tareasEntity = tareasEntity;
+	}
 
 	public String getArchivoEnviado() {
 		return ArchivoEnviado;
@@ -74,6 +85,14 @@ public class TareasUsuariosEntity {
 
 	public void setArchivoEnviado(String archivoEnviado) {
 		ArchivoEnviado = archivoEnviado;
+	}
+	
+	public int getIdTarea() {
+		return idTarea;
+	}
+
+	public void setIdTarea(int idTarea) {
+		this.idTarea = idTarea;
 	}
 
 	public Date getFechaEnvio() {

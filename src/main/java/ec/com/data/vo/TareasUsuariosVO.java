@@ -1,60 +1,21 @@
 package ec.com.data.vo;
 
-import java.util.Collection;
-import java.util.Date;
-
-import entity.TareasUsuariosEntity;
+import entity.TareasEntity;
 
 public class TareasUsuariosVO {
 	
-	private int idTarea;
-	private String nombreTarea;
-	private String descripcionTarea;
-	private int idModulo;
-	private String tipoTarea;
-	private int idCreadorTarea;
+	private String ObservacionesDocente;
 	private String estado;
-	private Date fechaInicio;
-	private Date fechaFin;
-	private String archivoAdjunto;
-	private int idCriterio;
-	private Collection<TareasUsuariosEntity> tareasUsuarios;
+	private int idTarea;
+	private int idTareaUsuario;
+	private int idUsuario;
+	private TareasEntity tareasEntity;
 	
-	public int getIdTarea() {
-		return idTarea;
+	public String getObservacionesDocente() {
+		return ObservacionesDocente;
 	}
-	public void setIdTarea(int idTarea) {
-		this.idTarea = idTarea;
-	}
-	public String getNombreTarea() {
-		return nombreTarea;
-	}
-	public void setNombreTarea(String nombreTarea) {
-		this.nombreTarea = nombreTarea;
-	}
-	public String getDescripcionTarea() {
-		return descripcionTarea;
-	}
-	public void setDescripcionTarea(String descripcionTarea) {
-		this.descripcionTarea = descripcionTarea;
-	}
-	public int getIdModulo() {
-		return idModulo;
-	}
-	public void setIdModulo(int idModulo) {
-		this.idModulo = idModulo;
-	}
-	public String getTipoTarea() {
-		return tipoTarea;
-	}
-	public void setTipoTarea(String tipoTarea) {
-		this.tipoTarea = tipoTarea;
-	}
-	public int getIdCreadorTarea() {
-		return idCreadorTarea;
-	}
-	public void setIdCreadorTarea(int idCreadorTarea) {
-		this.idCreadorTarea = idCreadorTarea;
+	public void setObservacionesDocente(String observacionesDocente) {
+		this.ObservacionesDocente = observacionesDocente;
 	}
 	public String getEstado() {
 		return estado;
@@ -62,36 +23,31 @@ public class TareasUsuariosVO {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public Date getFechaInicio() {
-		return fechaInicio;
+	public int getIdTarea() {
+		return idTarea;
 	}
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
+	public void setIdTarea(int idTarea) {
+		this.idTarea = idTarea;
 	}
-	public Date getFechaFin() {
-		return fechaFin;
+	public int getIdTareaUsuario() {
+		return idTareaUsuario;
 	}
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
+	public void setIdTareaUsuario(int idTareaUsuario) {
+		this.idTareaUsuario = idTareaUsuario;
 	}
-	public String getArchivoAdjunto() {
-		return archivoAdjunto;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
-	public void setArchivoAdjunto(String archivoAdjunto) {
-		this.archivoAdjunto = archivoAdjunto;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
-	
-	public int getIdCriterio() {
-		return idCriterio;
+	public TareasEntity getTareasEntity() {
+		return tareasEntity;
 	}
-	public void setIdCriterio(int idCriterio) {
-		this.idCriterio = idCriterio;
-	}
-	public Collection<TareasUsuariosEntity> getTareasUsuarios() {
-		return tareasUsuarios;
-	}
-	public void setTareasUsuarios(Collection<TareasUsuariosEntity> tareasUsuarios) {
-		this.tareasUsuarios = tareasUsuarios;
+	public void setTareasEntity(TareasEntity tareasEntity) {
+		this.tareasEntity = tareasEntity;
 	}
 	
+	
+
 }

@@ -27,6 +27,10 @@
 		<mapping class="entity.UsuariosEntity"></mapping>
 		<mapping class="entity.ModulosEntity"></mapping>
 		<mapping class="entity.TareasUsuariosEntity"></mapping>
+		<mapping class="entity.CriteriosEntity"></mapping>
+		<mapping class="entity.CatalogoCriterioEntity"></mapping>
+		<mapping class="entity.TiposTareasEntity"></mapping>
+		
 		
 	</session-factory>
 </hibernate-configuration>
