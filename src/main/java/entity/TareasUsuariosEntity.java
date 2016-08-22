@@ -31,6 +31,10 @@ public class TareasUsuariosEntity {
 	 @JoinColumn(name="idTarea",referencedColumnName="idTarea", insertable = false, updatable = false)
 	 TareasEntity tareasEntity;
 	 
+     @ManyToOne
+	 @JoinColumn(name="idUsuario",referencedColumnName="idUsuario", insertable = false, updatable = false)
+	 UsuariosEntity usuariosEntity;
+	 
 	 /*@Column(name = "idTarea")
 	 private int idTarea;*/
 	 
@@ -110,5 +114,14 @@ public class TareasUsuariosEntity {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	 
+
+	public UsuariosEntity getUsuariosEntity() {
+		return usuariosEntity;
+	}
+
+	public void setUsuariosEntity(UsuariosEntity usuariosEntity) {
+		this.usuariosEntity = usuariosEntity;
+	}
+	
+	
 }

@@ -6,9 +6,9 @@ public class TareasUsuariosVO {
 	
 	private String ObservacionesDocente;
 	private String estado;
-	private int idTarea;
-	private int idTareaUsuario;
-	private int idUsuario;
+	private Integer idTarea;
+	private Integer idTareaUsuario;
+	private Integer idUsuario;
 	private TareasEntity tareasEntity;
 	
 	public String getObservacionesDocente() {
@@ -23,22 +23,22 @@ public class TareasUsuariosVO {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public int getIdTarea() {
+	public Integer getIdTarea() {
 		return idTarea;
 	}
-	public void setIdTarea(int idTarea) {
+	public void setIdTarea(Integer idTarea) {
 		this.idTarea = idTarea;
 	}
-	public int getIdTareaUsuario() {
+	public Integer getIdTareaUsuario() {
 		return idTareaUsuario;
 	}
-	public void setIdTareaUsuario(int idTareaUsuario) {
+	public void setIdTareaUsuario(Integer idTareaUsuario) {
 		this.idTareaUsuario = idTareaUsuario;
 	}
-	public int getIdUsuario() {
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 	public TareasEntity getTareasEntity() {

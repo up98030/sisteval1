@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import ec.com.data.vo.CriteriosVO;
-import ec.com.data.vo.IdUsuarioVO;
 import ec.com.data.vo.TareasUsuariosVO;
 import ec.com.data.vo.TareasVO;
 import entity.CriteriosEntity;
@@ -78,7 +77,9 @@ public class TareasController {
 
 	
 	@RequestMapping(value = "/tareas/", method = RequestMethod.POST)
-	public ResponseEntity<String> listAllTareas(HttpServletResponse response,@RequestBody String idUsuario) {
+	public ResponseEntity<String> listAllTareas(HttpServletResponse response,@RequestBody String tareasUsusariosVO) {
+		
+		
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 		
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -88,7 +89,7 @@ public class TareasController {
         
 		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
 		try{
-			IdUsuarioVO idTareaVo = mapper.readValue(idUsuario, IdUsuarioVO.class);
+			TareasUsuariosVO tareaUsuarioVO = mapper.readValue(tareasUsusariosVO, TareasUsuariosVO.class);
 			 ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
 		     srb.applySettings(cf.getProperties());
 		     ServiceRegistry sr = srb.buildServiceRegistry();
@@ -97,10 +98,16 @@ public class TareasController {
 		     Session session = sf.openSession();
 		     
 		     Criteria criteria = session.createCriteria(TareasUsuariosEntity.class,"root");
-		     criteria.createAlias("tareasEntity", "tareasEntity");
-		     
-		     criteria.add(Restrictions.eq("idUsuario",idTareaVo.getIdUsuario()));
-		     criteria.add(Restrictions.eq("estado","CRE"));
+		     criteria.createAlias("tareasEntity", "tareasEntity");	
+		     criteria.createAlias("usuariosEntity", "usuariosEntity");		     		    
+
+		     if(tareaUsuarioVO.getIdUsuario() != null){
+			     criteria.add(Restrictions.eq("idUsuario",tareaUsuarioVO.getIdUsuario()));
+		     }
+		     criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
+		     if(tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null){
+			     criteria.add(Restrictions.eq("tareasEntity.idCreadorTarea", tareaUsuarioVO.getTareasEntity().getIdCreadorTarea()));
+		     }
 		     
 			ProjectionList projections = Projections.projectionList();
 			projections.add(Projections.property("idTareaUsuario"),"tareasUsuariosEntity.idTareaUsuario");
@@ -224,7 +231,7 @@ public class TareasController {
 	        tareasEntity.setFechaInicio(new Date());
 	        tareasEntity.setFechaFin(new Date());
 	        tareasEntity.setEstado("ACT");
-	        tareasEntity.setTipoTarea("TAREA");
+	        tareasEntity.setTipoTarea(tareaVO.getTipoTarea());
 	        tareasEntity.setIdCreadorTarea(tareaVO.getIdCreadorTarea());
 	        tareasEntity.setCriterios(tareaVO.getCriterios());
 	        tareasEntity.setIdModulo(1);
