@@ -49,6 +49,9 @@ public class TareasUsuariosEntity {
 	 
 	 @Column(name = "estado")
 	 private String estado;
+	 
+	 @Column(name = "calificacion")
+	 private Double calificacin;
 
 	public int getIdTareaUsuario() {
 		return idTareaUsuario;
@@ -122,6 +125,13 @@ public class TareasUsuariosEntity {
 	public void setUsuariosEntity(UsuariosEntity usuariosEntity) {
 		this.usuariosEntity = usuariosEntity;
 	}
-	
+
+	public Double getCalificacin() {
+		return calificacin;
+	}
+
+	public void setCalificacin(Double calificacin) {
+		this.calificacin = calificacin;
+	}
 	
 }
