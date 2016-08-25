@@ -51,7 +51,10 @@ public class TareasUsuariosEntity {
 	 private String estado;
 	 
 	 @Column(name = "calificacion")
-	 private Double calificacin;
+	 private Integer calificacion;
+	 
+	 @Column(name = "ObservacionCalificacion")
+	 private Integer ObservacionCalificacion;
 
 	public int getIdTareaUsuario() {
 		return idTareaUsuario;
@@ -126,12 +129,12 @@ public class TareasUsuariosEntity {
 		this.usuariosEntity = usuariosEntity;
 	}
 
-	public Double getCalificacin() {
-		return calificacin;
+	public Integer getCalificacion() {
+		return calificacion;
 	}
 
-	public void setCalificacin(Double calificacin) {
-		this.calificacin = calificacin;
+	public void setCalificacion(Integer calificacion) {
+		this.calificacion = calificacion;
 	}
 	
 }

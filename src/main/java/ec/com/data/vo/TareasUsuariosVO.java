@@ -10,7 +10,8 @@ public class TareasUsuariosVO {
 	private Integer idTarea;
 	private Integer idTareaUsuario;
 	private Integer idUsuario;
-	private Double calificacion;
+	private Integer calificacion;
+	private String ObservacionCalificacion;
 	private TareasEntity tareasEntity;
 	private UsuariosEntity usuariosEntity;
 	
@@ -45,10 +46,10 @@ public class TareasUsuariosVO {
 		this.idUsuario = idUsuario;
 	}
 	
-	public Double getCalificacion() {
+	public Integer getCalificacion() {
 		return calificacion;
 	}
-	public void setCalificacion(Double calificacion) {
+	public void setCalificacion(Integer calificacion) {
 		this.calificacion = calificacion;
 	}
 	public TareasEntity getTareasEntity() {
@@ -62,6 +63,12 @@ public class TareasUsuariosVO {
 	}
 	public void setUsuariosEntity(UsuariosEntity usuariosEntity) {
 		this.usuariosEntity = usuariosEntity;
+	}
+	public String getObservacionCalificacion() {
+		return ObservacionCalificacion;
+	}
+	public void setObservacionCalificacion(String observacionCalificacion) {
+		ObservacionCalificacion = observacionCalificacion;
 	}
 
 }

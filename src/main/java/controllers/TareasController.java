@@ -275,9 +275,16 @@ public class TareasController {
 					String currentTime = sdf.format(new Date());
 				Session session = HibernateUtil.getSessionFactory().openSession();
 		        session.beginTransaction();
+		        String hql = null;
 		        TareasUsuariosVO tareaVO = mapper.readValue(tareaData, TareasUsuariosVO.class);
-				 String hql = "UPDATE TareasUsuariosEntity SET ObservacionesDocente = '"+tareaVO.getObservacionesDocente()+
-				 	"' , estado ='"+ tareaVO.getEstado() +"' ,FechaEnvio = '" + currentTime  + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();
+		        if(tareaVO.getCalificacion() == null || tareaVO.getCalificacion().toString().isEmpty()){
+		        	hql = "UPDATE TareasUsuariosEntity SET ObservacionesDocente = '"+tareaVO.getObservacionesDocente()+
+						 	"' , estado ='"+ tareaVO.getEstado() +"' ,FechaEnvio = '" + currentTime  + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();
+		        }else{
+		        	hql = "UPDATE TareasUsuariosEntity SET calificacion = "+tareaVO.getCalificacion()+
+						 	" , estado ='"+ tareaVO.getEstado() +"' ,ObservacionCalificacion = '" + tareaVO.getObservacionCalificacion() + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();
+		        }
+				 
 			     Query query = session.createQuery(hql);
 			     query.executeUpdate();
 			     session.getTransaction().commit();
