@@ -1,5 +1,7 @@
 package ec.com.data.vo;
 
+import java.util.Date;
+
 import entity.TareasEntity;
 import entity.UsuariosEntity;
 
@@ -12,6 +14,7 @@ public class TareasUsuariosVO {
 	private Integer idUsuario;
 	private Integer calificacion;
 	private String ObservacionCalificacion;
+	private Date FechaEnvio;
 	private TareasEntity tareasEntity;
 	private UsuariosEntity usuariosEntity;
 	
@@ -69,6 +72,12 @@ public class TareasUsuariosVO {
 	}
 	public void setObservacionCalificacion(String observacionCalificacion) {
 		ObservacionCalificacion = observacionCalificacion;
+	}
+	public Date getFechaEnvio() {
+		return FechaEnvio;
+	}
+	public void setFechaEnvio(Date fechaEnvio) {
+		FechaEnvio = fechaEnvio;
 	}
 
 }

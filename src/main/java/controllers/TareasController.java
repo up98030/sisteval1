@@ -103,6 +103,12 @@ public class TareasController {
 
 		     if(tareaUsuarioVO.getIdUsuario() != null){
 			     criteria.add(Restrictions.eq("idUsuario",tareaUsuarioVO.getIdUsuario()));
+			     if(tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION")){
+				     criteria.add(Restrictions.eq("tareasEntity.tipoTarea",tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+			     }
+			     if(tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA")){
+				     criteria.add(Restrictions.eq("tareasEntity.tipoTarea",tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+			     }
 		     }
 		     criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
 		     if(tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null){
