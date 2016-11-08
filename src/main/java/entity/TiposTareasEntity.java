@@ -12,7 +12,7 @@ public class TiposTareasEntity {
 
 	@Id
     @Column(name = "idTiposTareas")
-    private int idTiposTareas;
+    private Integer idTiposTareas;
 
     @Column(name = "nombreTipoTarea")
     private String nombreTipoTarea;
@@ -20,11 +20,11 @@ public class TiposTareasEntity {
     @Column(name = "descripcionTipoTarea")
     private String descripcionTipoTarea;
 
-	public int getIdTiposTareas() {
+	public Integer getIdTiposTareas() {
 		return idTiposTareas;
 	}
 
-	public void setIdTiposTareas(int idTiposTareas) {
+	public void setIdTiposTareas(Integer idTiposTareas) {
 		this.idTiposTareas = idTiposTareas;
 	}
 

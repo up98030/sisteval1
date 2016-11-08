@@ -11,7 +11,7 @@ public class UsuariosEntity {
 
 	@Id
     @Column(name = "idUsuario")
-    private int idUsuario;
+    private Integer idUsuario;
     
     @Column(name = "nombreUsuario")
     private String nombreUsuario;
@@ -26,20 +26,20 @@ public class UsuariosEntity {
     private String nombreCompleto;
     
     @Column(name = "idPerfil")
-    private int idPerfil;
+    private Integer idPerfil;
     
     @Column(name = "estado")
     private String estado;
     
     @Column(name = "idModulo")
-    private int idModulo;
+    private Integer idModulo;
     
 
-	public int getIdUsuario() {
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -75,11 +75,11 @@ public class UsuariosEntity {
 		this.nombreCompleto = nombreCompleto;
 	}
 
-	public int getIdPerfil() {
+	public Integer getIdPerfil() {
 		return idPerfil;
 	}
 
-	public void setIdPerfil(int idPerfil) {
+	public void setIdPerfil(Integer idPerfil) {
 		this.idPerfil = idPerfil;
 	}
 
@@ -91,11 +91,11 @@ public class UsuariosEntity {
 		this.estado = estado;
 	}
 
-	public int getIdModulo() {
+	public Integer getIdModulo() {
 		return idModulo;
 	}
 
-	public void setIdModulo(int idModulo) {
+	public void setIdModulo(Integer idModulo) {
 		this.idModulo = idModulo;
 	}
 	

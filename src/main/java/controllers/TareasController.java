@@ -1,11 +1,17 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Base64;
 
 import javax.servlet.http.HttpServletResponse;
 
+//import org.apache.commons.codec.binary.Base64;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -216,7 +222,32 @@ public class TareasController {
 		
 	}
 
-
+	public static byte[] loadFile(File file){
+		try {
+			InputStream is = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		long length = file.length();
+		if(length > Integer.MAX_VALUE){
+			
+		}
+		byte[] bytes = new byte[(int)length];
+		return bytes;
+	}
+	
+//	public String encodeFileToBase64(String fileName){
+//		File file = new File(fileName);
+//		byte[] bytes = loadFile(file);
+//		byte[] encoded = Base64.encodeBase64(bytes);
+//		String encodedString = new String(encoded);
+//		return encodedString;
+//	}
+//	
+//	public byte[] decodeFileToBase64(String base64FileString){
+//		byte[] file = Base64.decodeBase64(base64FileString);
+//		return file;
+//	}
 	
 	
 	@RequestMapping(value = "/crearTarea/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
@@ -242,7 +273,10 @@ public class TareasController {
 	        tareasEntity.setCriterios(tareaVO.getCriterios());
 	        tareasEntity.setIdModulo(1);
 	        tareasEntity.setDescripcionTarea(tareaVO.getDescripcionTarea());
-	        tareasEntity.setArchivoAdjunto("Archivo1.pdf");
+	        byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
+	        tareasEntity.setArchivoAdjunto(decoded);
+	        //tareasEntity.setArchivoAdjunto(Base64.getDecoder().decode(tareaVO.getArchivoAdjunto()));
+	       // tareasEntity.setArchivoAdjunto(decodeFileToBase64(tareaVO.getArchivoAdjunto()));
 	        
 	        session.save(tareasEntity);
 	        

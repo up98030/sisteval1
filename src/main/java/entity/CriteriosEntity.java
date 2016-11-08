@@ -16,7 +16,7 @@ public class CriteriosEntity {
 	
 	@Id
     @Column(name = "idCriterio")
-    private int idCriterio;
+    private Integer idCriterio;
 
     @Column(name = "nombreCriterio")
     private String nombreCriterio;
@@ -31,11 +31,11 @@ public class CriteriosEntity {
     private String descripcionCriterio;
     
     
-	public int getIdCriterio() {
+	public Integer getIdCriterio() {
 		return idCriterio;
 	}
 
-	public void setIdCriterio(int idCriterio) {
+	public void setIdCriterio(Integer idCriterio) {
 		this.idCriterio = idCriterio;
 	}
 

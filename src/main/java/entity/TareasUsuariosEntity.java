@@ -19,13 +19,13 @@ public class TareasUsuariosEntity {
 	@Id
     @Column(name = "idTareaUsuario")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int idTareaUsuario;
+    private Integer idTareaUsuario;
 	
 	 @Column(name = "idUsuario")
-	 private int idUsuario;
+	 private Integer idUsuario;
 	 
 	 @Column(name = "idTarea")
-	 private int idTarea;
+	 private Integer idTarea;
 	 
 	 @ManyToOne
 	 @JoinColumn(name="idTarea",referencedColumnName="idTarea", insertable = false, updatable = false)
@@ -36,13 +36,13 @@ public class TareasUsuariosEntity {
 	 UsuariosEntity usuariosEntity;
 	 
 	 /*@Column(name = "idTarea")
-	 private int idTarea;*/
+	 private Integer idTarea;*/
 	 
 	 @Column(name = "ObservacionesDocente")
 	 private String ObservacionesDocente;
 	 
 	 @Column(name = "ArchivoEnviado")
-	 private String ArchivoEnviado;
+	 private byte[] ArchivoEnviado;
 	 
 	 @Column(name = "FechaEnvio")
 	 private Date FechaEnvio;
@@ -56,19 +56,19 @@ public class TareasUsuariosEntity {
 	 @Column(name = "ObservacionCalificacion")
 	 private Integer ObservacionCalificacion;
 
-	public int getIdTareaUsuario() {
+	public Integer getIdTareaUsuario() {
 		return idTareaUsuario;
 	}
 
-	public void setIdTareaUsuario(int idTareaUsuario) {
+	public void setIdTareaUsuario(Integer idTareaUsuario) {
 		this.idTareaUsuario = idTareaUsuario;
 	}
 
-	public int getIdUsuario() {
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -89,19 +89,19 @@ public class TareasUsuariosEntity {
 		this.tareasEntity = tareasEntity;
 	}
 
-	public String getArchivoEnviado() {
+	public byte[] getArchivoEnviado() {
 		return ArchivoEnviado;
 	}
 
-	public void setArchivoEnviado(String archivoEnviado) {
+	public void setArchivoEnviado(byte[] archivoEnviado) {
 		ArchivoEnviado = archivoEnviado;
 	}
 	
-	public int getIdTarea() {
+	public Integer getIdTarea() {
 		return idTarea;
 	}
 
-	public void setIdTarea(int idTarea) {
+	public void setIdTarea(Integer idTarea) {
 		this.idTarea = idTarea;
 	}
 

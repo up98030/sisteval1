@@ -22,7 +22,7 @@ public class TareasEntity {
     @Id
     @Column(name = "idTarea")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int idTarea;
+    private Integer idTarea;
 
     @Column(name = "nombreTarea")
     private String nombreTarea;
@@ -49,16 +49,16 @@ public class TareasEntity {
     private Date fechaFin;
     
     @Column(name = "ARCHIVOADJUNTO")
-    private String archivoAdjunto;
+    private byte[] archivoAdjunto;
     
     @Column(name = "Criterios")
     private String criterios;
 
-	public int getIdTarea() {
+	public Integer getIdTarea() {
 		return idTarea;
 	}
 
-	public void setIdTarea(int idTarea) {
+	public void setIdTarea(Integer idTarea) {
 		this.idTarea = idTarea;
 	}
 
@@ -118,11 +118,11 @@ public class TareasEntity {
 		this.fechaFin = fechaFin;
 	}
 
-	public String getArchivoAdjunto() {
+	public byte[] getArchivoAdjunto() {
 		return archivoAdjunto;
 	}
 
-	public void setArchivoAdjunto(String archivoAdjunto) {
+	public void setArchivoAdjunto(byte[] archivoAdjunto) {
 		this.archivoAdjunto = archivoAdjunto;
 	}
 

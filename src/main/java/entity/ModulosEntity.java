@@ -11,7 +11,7 @@ public class ModulosEntity {
 	
 	@Id
     @Column(name = "idModulo")
-    private int idModulo;
+    private Integer idModulo;
 	
 	@Column(name = "nombreModulo")
     private String nombreModulo;
@@ -19,11 +19,11 @@ public class ModulosEntity {
 	@Column(name = "estado")
     private String estado;
 
-	public int getIdModulo() {
+	public Integer getIdModulo() {
 		return idModulo;
 	}
 
-	public void setIdModulo(int idModulo) {
+	public void setIdModulo(Integer idModulo) {
 		this.idModulo = idModulo;
 	}
 
