@@ -1,9 +1,11 @@
 ec\com\data\vo\TareasUsuariosVO.class
 entity\ModulosEntity.class
 entity\CriteriosEntity.class
+ec\com\data\vo\NotasVO.class
 ec\com\ups\sistEval1\HelloWorld.class
 adminUtil\TareasEnviadasUtil.class
 ec\com\data\vo\UserDataVo.class
+servicio\NotasServicio.class
 controllers\UsuariosController.class
 entity\TiposTareasEntity.class
 controllers\TareasController.class
@@ -14,8 +16,10 @@ ec\com\data\vo\UsuariosVo.class
 entity\CatalogoCriterioEntity.class
 entity\UsuariosEntity.class
 util\TareasUpdateUtil.class
+gestor\NotasGestor.class
 util\TareasDeleteUtil.class
 ec\com\ups\sistEval1\App.class
+controllers\NotasController.class
 ec\com\data\vo\IdUsuarioVO.class
 entity\TareasEntity.class
 entity\StudentEntity.class
@@ -23,6 +27,8 @@ adminUtil\CalificarTareaUtil.class
 util\TareasSelectUtil.class
 entity\TareasUsuariosEntity.class
 util\TareasInsertUtil.class
+controllers\Test.class
 ec\com\data\vo\TareaVo.class
 util\HibernateUtil.class
+gui\TareasController.class
 ec\com\data\vo\TareasVO.class

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Base64;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -119,6 +118,15 @@ public class TareasController {
 		     criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
 		     if(tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null){
 			     criteria.add(Restrictions.eq("tareasEntity.idCreadorTarea", tareaUsuarioVO.getTareasEntity().getIdCreadorTarea()));
+		     }
+		     //Fecha menor, son las reuniones proximas
+		     if(tareaUsuarioVO.getFechaEnvio() != null){
+		    	 criteria.add(Restrictions.le("tareasEntity.fechaFin", new Date(tareaUsuarioVO.getFechaEnvio())));
+		     }
+
+		     //Fecha mayor son las reuniones pasadas
+		     if(tareaUsuarioVO.getFechaFin() != null){
+		    	 criteria.add(Restrictions.ge("tareasEntity.fechaFin", new Date(tareaUsuarioVO.getFechaFin())));
 		     }
 		     
 			ProjectionList projections = Projections.projectionList();
@@ -266,7 +274,7 @@ public class TareasController {
 
 	        tareasEntity.setNombreTarea(tareaVO.getNombreTarea());
 	        tareasEntity.setFechaInicio(new Date());
-	        tareasEntity.setFechaFin(new Date());
+	        tareasEntity.setFechaFin(tareaVO.getFechaFin());
 	        tareasEntity.setEstado("ACT");
 	        tareasEntity.setTipoTarea(tareaVO.getTipoTarea());
 	        tareasEntity.setIdCreadorTarea(tareaVO.getIdCreadorTarea());
@@ -316,10 +324,14 @@ public class TareasController {
 				Session session = HibernateUtil.getSessionFactory().openSession();
 		        session.beginTransaction();
 		        String hql = null;
+		        byte[] decoded = null;
 		        TareasUsuariosVO tareaVO = mapper.readValue(tareaData, TareasUsuariosVO.class);
+		        
+		        
 		        if(tareaVO.getCalificacion() == null || tareaVO.getCalificacion().toString().isEmpty()){
+			        decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
 		        	hql = "UPDATE TareasUsuariosEntity SET ObservacionesDocente = '"+tareaVO.getObservacionesDocente()+
-						 	"' , estado ='"+ tareaVO.getEstado() +"' ,FechaEnvio = '" + currentTime  + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();
+						 	"' , estado ='"+ tareaVO.getEstado() +"', ArchivoEnviado='" + decoded + "' ,FechaEnvio = '" + currentTime  + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();
 		        }else{
 		        	hql = "UPDATE TareasUsuariosEntity SET calificacion = "+tareaVO.getCalificacion()+
 						 	" , estado ='"+ tareaVO.getEstado() +"' ,ObservacionCalificacion = '" + tareaVO.getObservacionCalificacion() + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();

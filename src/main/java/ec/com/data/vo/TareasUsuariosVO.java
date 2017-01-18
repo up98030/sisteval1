@@ -1,7 +1,5 @@
 package ec.com.data.vo;
 
-import java.util.Date;
-
 import entity.TareasEntity;
 import entity.UsuariosEntity;
 
@@ -14,10 +12,14 @@ public class TareasUsuariosVO {
 	private Integer idUsuario;
 	private Integer calificacion;
 	private String ObservacionCalificacion;
-	private Date FechaEnvio;
+	private String FechaEnvio;
+	private String FechaFin;
 	private TareasEntity tareasEntity;
 	private UsuariosEntity usuariosEntity;
-	
+	private String archivoAdjunto;
+    private byte[] ArchivoEnviado;
+
+
 	public String getObservacionesDocente() {
 		return ObservacionesDocente;
 	}
@@ -73,11 +75,30 @@ public class TareasUsuariosVO {
 	public void setObservacionCalificacion(String observacionCalificacion) {
 		ObservacionCalificacion = observacionCalificacion;
 	}
-	public Date getFechaEnvio() {
+	public String getFechaEnvio() {
 		return FechaEnvio;
 	}
-	public void setFechaEnvio(Date fechaEnvio) {
+	public void setFechaEnvio(String fechaEnvio) {
 		FechaEnvio = fechaEnvio;
 	}
+	public String getArchivoAdjunto() {
+		return archivoAdjunto;
+	}
+	public void setArchivoAdjunto(String archivoAdjunto) {
+		this.archivoAdjunto = archivoAdjunto;
+	}
+	public String getFechaFin() {
+		return FechaFin;
+	}
+	public void setFechaFin(String fechaFin) {
+		FechaFin = fechaFin;
+	}
+	public byte[] getArchivoEnviado() {
+		return ArchivoEnviado;
+	}
+	public void setArchivoEnviado(byte[] archivoEnviado) {
+		ArchivoEnviado = archivoEnviado;
+	}
+	
 
 }

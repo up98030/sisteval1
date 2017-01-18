@@ -54,7 +54,7 @@ public class TareasUsuariosEntity {
 	 private Integer calificacion;
 	 
 	 @Column(name = "ObservacionCalificacion")
-	 private Integer ObservacionCalificacion;
+	 private String ObservacionCalificacion;
 
 	public Integer getIdTareaUsuario() {
 		return idTareaUsuario;
@@ -136,5 +136,14 @@ public class TareasUsuariosEntity {
 	public void setCalificacion(Integer calificacion) {
 		this.calificacion = calificacion;
 	}
+
+	public String getObservacionCalificacion() {
+		return ObservacionCalificacion;
+	}
+
+	public void setObservacionCalificacion(String observacionCalificacion) {
+		ObservacionCalificacion = observacionCalificacion;
+	}
+	
 	
 }
