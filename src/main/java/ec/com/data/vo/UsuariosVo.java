@@ -3,11 +3,13 @@ package ec.com.data.vo;
 public class UsuariosVo {
 	
 	private Integer idUsuario;
-	private String usernom;
-	private String userpwd;
-	private String nombres;
-	private String apellidos;
-	private Integer userrol;
+	private String nombreUsuario;
+	private String correoUsuario;
+	private String password;
+	private String nombreCompleto;
+	private Integer idPerfil;
+	private String estado;
+	private Integer idModulo;
 	
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -15,37 +17,47 @@ public class UsuariosVo {
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public String getUsernom() {
-		return usernom;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
-	public void setUsernom(String usernom) {
-		this.usernom = usernom;
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
-	public String getUserpwd() {
-		return userpwd;
+	public String getCorreoUsuario() {
+		return correoUsuario;
 	}
-	public void setUserpwd(String userpwd) {
-		this.userpwd = userpwd;
+	public void setCorreoUsuario(String correoUsuario) {
+		this.correoUsuario = correoUsuario;
 	}
-	public String getNombres() {
-		return nombres;
+	public String getPassword() {
+		return password;
 	}
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getApellidos() {
-		return apellidos;
+	public String getNombreCompleto() {
+		return nombreCompleto;
 	}
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
-	public Integer getUserrol() {
-		return userrol;
+	public Integer getIdPerfil() {
+		return idPerfil;
 	}
-	public void setUserrol(Integer userrol) {
-		this.userrol = userrol;
+	public void setIdPerfil(Integer idPerfil) {
+		this.idPerfil = idPerfil;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public Integer getIdModulo() {
+		return idModulo;
+	}
+	public void setIdModulo(Integer idModulo) {
+		this.idModulo = idModulo;
 	}
 	
-	
-
 }

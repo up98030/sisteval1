@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import ec.com.data.vo.TareasVO;
 import ec.com.data.vo.UsuariosVo;
+import entity.TareasEntity;
+import entity.TareasUsuariosEntity;
 import entity.UsuariosEntity;
 import util.HibernateUtil;
 
@@ -61,7 +65,7 @@ public class UsuariosController {
 				
 		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
-	
+	/*
 	@RequestMapping(value = "/crearUsuario/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
 	public ResponseEntity<String> createUser(HttpServletResponse response,@RequestBody String userData){
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
@@ -85,15 +89,10 @@ public class UsuariosController {
         session.beginTransaction();
         
         UsuariosEntity usuariosEntity = new UsuariosEntity();
-/*
-        usuariosEntity.setIdUsuario(idUsuario);
-        usuariosEntity.setUsernom(usernom);
-        usuariosEntity.setUserpwd(userpwd);
-        usuariosEntity.setNombres(nombres);
-        usuariosEntity.setApellidos(apellidos);
-        usuariosEntity.setUserrol(userrol);
+
+       //usuariosEntity.set
         usuariosEntity.setEstado("ACT");
-                     */
+                     
         //Save the employee in database
         session.save(usuariosEntity);
  
@@ -103,7 +102,48 @@ public class UsuariosController {
     	 String json = new Gson().toJson("Usuario Insertado...");
  		return new ResponseEntity<String>(json, HttpStatus.OK);	 
 		
+	}*/
+
+
+	@RequestMapping(value = "/crearUsuario/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
+	public ResponseEntity<String> createUser(HttpServletResponse response,@RequestBody String userData){
+		
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+		
+		ObjectMapper mapper = new ObjectMapper(); 
+		String datosUsuario = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        
+		try{
+			UsuariosVo usuarioVO = mapper.readValue(userData, UsuariosVo.class);
+			
+			UsuariosEntity usuariosEntity = new UsuariosEntity();
+
+	       usuariosEntity.setNombreUsuario(usuarioVO.getNombreUsuario());
+	       usuariosEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
+	       usuariosEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
+	       usuariosEntity.setPassword(usuarioVO.getPassword());
+	       usuariosEntity.setIdPerfil(usuarioVO.getIdPerfil());
+	       usuariosEntity.setIdModulo(usuarioVO.getIdModulo());
+	       usuariosEntity.setEstado(usuarioVO.getEstado());	       
+	        
+	       if(usuarioVO.getIdUsuario() != null){
+	    	   usuariosEntity.setIdUsuario(usuarioVO.getIdUsuario());
+	        	session.update(usuariosEntity);
+	        }else{
+	        	session.save(usuariosEntity);
+	        }
+	        
+	        
+	        session.getTransaction().commit();
+
+		     String json = new Gson().toJson("Usuario Creado");
+	 		return new ResponseEntity<String>(json, HttpStatus.OK);	 
+
+		}catch(Exception e){
+		     String json = new Gson().toJson("No se pudo crear usuario");
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+		}
 	}
-
-
 }
