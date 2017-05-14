@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -22,11 +24,13 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -257,7 +261,6 @@ public class TareasController {
 //		return file;
 //	}
 	
-	
 	@RequestMapping(value = "/crearTarea/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
 	public ResponseEntity<String> login(HttpServletResponse response,@RequestBody String tareaData){
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
@@ -281,8 +284,10 @@ public class TareasController {
 	        tareasEntity.setCriterios(tareaVO.getCriterios());
 	        tareasEntity.setIdModulo(1);
 	        tareasEntity.setDescripcionTarea(tareaVO.getDescripcionTarea());
-	        byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
-	        tareasEntity.setArchivoAdjunto(decoded);
+	        if(tareaVO.getArchivoAdjunto() != null){
+	        	byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
+		        tareasEntity.setArchivoAdjunto(decoded);
+	        }
 	        //tareasEntity.setArchivoAdjunto(Base64.getDecoder().decode(tareaVO.getArchivoAdjunto()));
 	       // tareasEntity.setArchivoAdjunto(decodeFileToBase64(tareaVO.getArchivoAdjunto()));
 	        
@@ -304,7 +309,7 @@ public class TareasController {
 
 		}catch(Exception e){
 		     String json = new Gson().toJson("No se pudo crear tarea");
-			return new ResponseEntity<String>(json, HttpStatus.OK);
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
@@ -350,6 +355,35 @@ public class TareasController {
 				System.out.println("Error: " + e.getMessage());
 				return new ResponseEntity<String>(respuesta, HttpStatus.BAD_REQUEST);
 			}
+	}
+	
+	
+	@RequestMapping(value = "/crearTareaArchivo/", method = RequestMethod.POST, produces = "application/json;charset=UTF-8", consumes = {"multipart/form-data", "application/x-www-form-urlencoded"})
+	public ResponseEntity<String> procesarArchivoVentas(@RequestBody MultipartFile file){
+
+		try {
+
+			if (file == null) {
+				throw new Exception("El archivo esta vacio");
+			}
+
+			System.out.println("Procesando archivo {getOriginalFilename} ... " + file.getOriginalFilename());
+			System.out.println("Procesando archivo {getBytes} ... " + file.getBytes());
+			System.out.println("Procesando archivo {getInputStream} ... " + file.getInputStream());
+			System.out.println("Procesando archivo {getContentType} ... " + file.getContentType());
+			System.out.println("Procesando archivo {getName} ... " + file.getName());
+			
+
+			final Path pathArchivoVentasTemp = Files.createTempFile(file.getOriginalFilename(), null);
+			file.transferTo(pathArchivoVentasTemp.toFile());
+
+			return new ResponseEntity<String>("Exito", HttpStatus.OK);
+
+		} catch (Exception e) {
+			System.out.println("Error procesando archivo." +  e);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 	
 	

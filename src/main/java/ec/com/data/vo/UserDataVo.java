@@ -1,6 +1,8 @@
 package ec.com.data.vo;
 
-public class UserDataVo {
+import entity.UsuariosEntity;
+
+public class UserDataVo extends UsuariosEntity{
 	
 	private String usuario;
 	private String passwd;

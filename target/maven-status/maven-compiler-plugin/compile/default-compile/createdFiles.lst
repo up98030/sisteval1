@@ -22,6 +22,7 @@ ec\com\ups\sistEval1\App.class
 controllers\NotasController.class
 ec\com\data\vo\IdUsuarioVO.class
 entity\TareasEntity.class
+ec\com\data\vo\UserSummaryVO.class
 entity\StudentEntity.class
 adminUtil\CalificarTareaUtil.class
 util\TareasSelectUtil.class

@@ -65,50 +65,10 @@ public class UsuariosController {
 				
 		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
-	/*
+	
 	@RequestMapping(value = "/crearUsuario/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
 	public ResponseEntity<String> createUser(HttpServletResponse response,@RequestBody String userData){
-		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
-		System.out.println("useDatar: " + userData);
-		String [] userObject  = userData.split(","); 
-		Integer idUsuario = Integer.parseInt(userObject[0]);
-		String usernom = userObject[1];
-		String userpwd = userObject[2];
-		String nombres= userObject[3];
-		String apellidos = userObject[4];
-		Integer userrol = Integer.parseInt(userObject[5]);
-		
-		response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-		
-        System.out.println("INSERTANDO USUARIO..." + usernom);
-		//System.out.println("Parametro: " + input);
-		Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        
-        UsuariosEntity usuariosEntity = new UsuariosEntity();
-
-       //usuariosEntity.set
-        usuariosEntity.setEstado("ACT");
-                     
-        //Save the employee in database
-        session.save(usuariosEntity);
- 
-        //Commit the transaction
-        session.getTransaction().commit();
-	     		
-    	 String json = new Gson().toJson("Usuario Insertado...");
- 		return new ResponseEntity<String>(json, HttpStatus.OK);	 
-		
-	}*/
-
-
-	@RequestMapping(value = "/crearUsuario/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
-	public ResponseEntity<String> createUser(HttpServletResponse response,@RequestBody String userData){
-		
-		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 		
 		ObjectMapper mapper = new ObjectMapper(); 
 		String datosUsuario = null;
@@ -145,5 +105,6 @@ public class UsuariosController {
 		     String json = new Gson().toJson("No se pudo crear usuario");
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 		}
+		
 	}
 }

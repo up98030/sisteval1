@@ -1,15 +1,4 @@
 package controllers;
-import java.util.Date;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
-import ec.com.data.vo.TareasUsuariosVO;
-import util.HibernateUtil;
 
 public class Test {
 	
@@ -46,5 +35,10 @@ public class Test {
 //	}catch(Exception e){
 //		
 //	}
+//	}
+//	
+//	@org.junit.Test
+//	public void login(){
+//		
 //	}
 }
