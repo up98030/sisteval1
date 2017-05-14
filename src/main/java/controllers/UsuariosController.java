@@ -14,6 +14,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import ec.com.data.vo.TareasUsuariosVO;
 import ec.com.data.vo.TareasVO;
 import ec.com.data.vo.UsuariosVo;
 import entity.TareasEntity;
@@ -105,6 +107,47 @@ Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 		     String json = new Gson().toJson("No se pudo crear usuario");
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 		}
-		
 	}
+	
+	@RequestMapping(value = "/actualizarUsuario/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
+	public ResponseEntity<String> calificarTarea(HttpServletResponse response,@RequestBody String usuarioData) {
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+			
+		ObjectMapper mapper = new ObjectMapper(); 
+		String respuesta;
+			try{		
+				
+				Session session = HibernateUtil.getSessionFactory().openSession();
+		        session.beginTransaction();
+		        String hql = null;
+		        UsuariosVo usuarioVo = mapper.readValue(usuarioData, UsuariosVo.class);
+		        
+		        StringBuilder sentencia  = new StringBuilder();
+		        
+		        hql = "UPDATE UsuariosEntity SET nombreUsuario = '" + usuarioVo.getNombreUsuario() + "', " +
+		        		"correoUsuario = '" + usuarioVo.getCorreoUsuario() + "', nombreCompleto = '" + usuarioVo.getNombreCompleto() + "' ";
+		       
+		        sentencia.append(hql);
+		        
+		        if(!StringUtils.isEmpty(usuarioVo.getPassword())){
+		        	sentencia.append(", password = '" + usuarioVo.getPassword() + "' ");
+		        }
+		        
+		        sentencia.append("where idUsuario = " + usuarioVo.getIdUsuario());
+		        
+			     Query query = session.createQuery(sentencia.toString());
+			     query.executeUpdate();
+			     session.getTransaction().commit();
+			     session.flush();
+				 session.close();
+				 
+				 respuesta = new Gson().toJson("Usuario actualizado");
+			return new ResponseEntity<String>(respuesta, HttpStatus.OK);
+			}catch(Exception e){
+				respuesta = new Gson().toJson("No se pudo actualizar usuario");
+				System.out.println("Error: " + e.getMessage());
+				return new ResponseEntity<String>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+	}
+	
 }
