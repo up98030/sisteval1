@@ -53,6 +53,12 @@ public class TareasEntity {
     
     @Column(name = "Criterios")
     private String criterios;
+    
+    @Column(name = "extensionArchivo")
+    private String extensionArchivo;
+    
+    @Column(name = "idPeriodo")
+    private Integer idPeriodo;
 
 	public Integer getIdTarea() {
 		return idTarea;
@@ -142,4 +148,32 @@ public class TareasEntity {
 		this.tipoTarea = tipoTarea;
 	}
 
+	/**
+	 * @return the extensionArchivo
+	 */
+	public String getExtensionArchivo() {
+		return extensionArchivo;
+	}
+
+	/**
+	 * @param extensionArchivo the extensionArchivo to set
+	 */
+	public void setExtensionArchivo(String extensionArchivo) {
+		this.extensionArchivo = extensionArchivo;
+	}
+
+	/**
+	 * @return the idPeriodo
+	 */
+	public Integer getIdPeriodo() {
+		return idPeriodo;
+	}
+
+	/**
+	 * @param idPeriodo the idPeriodo to set
+	 */
+	public void setIdPeriodo(Integer idPeriodo) {
+		this.idPeriodo = idPeriodo;
+	}
+	
 }

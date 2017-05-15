@@ -30,6 +30,7 @@
 		<mapping class="entity.CriteriosEntity"></mapping>
 		<mapping class="entity.CatalogoCriterioEntity"></mapping>
 		<mapping class="entity.TiposTareasEntity"></mapping>
+		<mapping class="entity.PerfilesEntity"></mapping>
 		
 		
 	</session-factory>
