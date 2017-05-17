@@ -31,6 +31,7 @@
 		<mapping class="entity.CatalogoCriterioEntity"></mapping>
 		<mapping class="entity.TiposTareasEntity"></mapping>
 		<mapping class="entity.PerfilesEntity"></mapping>
+		<mapping class="entity.PeriodosEntity"></mapping>
 		
 		
 	</session-factory>

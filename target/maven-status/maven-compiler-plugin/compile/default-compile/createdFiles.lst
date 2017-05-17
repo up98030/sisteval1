@@ -14,6 +14,7 @@ ec\com\data\vo\CriteriosVO.class
 util\CORSFilter.class
 ec\com\data\vo\UsuariosVo.class
 entity\CatalogoCriterioEntity.class
+entity\PeriodosEntity.class
 entity\UsuariosEntity.class
 util\TareasUpdateUtil.class
 gestor\NotasGestor.class

@@ -10,6 +10,7 @@ public class UsuariosVo {
 	private Integer idPerfil;
 	private String estado;
 	private Integer idModulo;
+	private Integer idPeriodo;
 	
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -58,6 +59,18 @@ public class UsuariosVo {
 	}
 	public void setIdModulo(Integer idModulo) {
 		this.idModulo = idModulo;
+	}
+	/**
+	 * @return the idPeriodo
+	 */
+	public Integer getIdPeriodo() {
+		return idPeriodo;
+	}
+	/**
+	 * @param idPeriodo the idPeriodo to set
+	 */
+	public void setIdPeriodo(Integer idPeriodo) {
+		this.idPeriodo = idPeriodo;
 	}
 	
 }
