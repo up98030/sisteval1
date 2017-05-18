@@ -18,7 +18,9 @@ public class TareasVO {
 	private Date fechaFin;
 	private String archivoAdjunto;
 	private String criterios;
+	private String extensionArchivo;
 	private Collection<TareasUsuariosEntity> tareasUsuarios;
+	private Integer idPeriodo;
 	
 	public int getIdTarea() {
 		return idTarea;
@@ -92,5 +94,28 @@ public class TareasVO {
 	public void setTareasUsuarios(Collection<TareasUsuariosEntity> tareasUsuarios) {
 		this.tareasUsuarios = tareasUsuarios;
 	}
-	
+	/**
+	 * @return the extensionArchivo
+	 */
+	public String getExtensionArchivo() {
+		return extensionArchivo;
+	}
+	/**
+	 * @param extensionArchivo the extensionArchivo to set
+	 */
+	public void setExtensionArchivo(String extensionArchivo) {
+		this.extensionArchivo = extensionArchivo;
+	}
+	/**
+	 * @return the idPeriodo
+	 */
+	public Integer getIdPeriodo() {
+		return idPeriodo;
+	}
+	/**
+	 * @param idPeriodo the idPeriodo to set
+	 */
+	public void setIdPeriodo(Integer idPeriodo) {
+		this.idPeriodo = idPeriodo;
+	}
 }
