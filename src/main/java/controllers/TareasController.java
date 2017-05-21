@@ -95,12 +95,12 @@ public class TareasController {
 	@ResponseBody
 	public ResponseEntity<byte[]> obtenerArchivoBinesProductos(@PathVariable("idTarea") Integer idTarea,
 			@PathVariable("idUsuario") Integer idUsuario) {
-		
+
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
 		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
-		
-		try{
+
+		try {
 			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
 			srb.applySettings(cf.getProperties());
 			ServiceRegistry sr = srb.buildServiceRegistry();
@@ -112,9 +112,10 @@ public class TareasController {
 			Query query = session.createQuery(hql);
 
 			TareasEntity tarea = (TareasEntity) query.uniqueResult();
-			
+
 			tarea.getArchivoAdjunto();
-			final byte[] lines = tarea.getArchivoAdjunto();;
+			final byte[] lines = tarea.getArchivoAdjunto();
+			;
 
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.setContentType(MediaType.parseMediaType("text/plain"));
@@ -123,10 +124,9 @@ public class TareasController {
 			responseHeaders.add("Content-Disposition", "attachment; filename=tarea." + extension);
 
 			return new ResponseEntity<byte[]>(lines, HttpStatus.OK);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return new ResponseEntity<byte[]>(new byte[0], HttpStatus.BAD_REQUEST);
 		}
-
 
 	}
 
@@ -252,6 +252,37 @@ public class TareasController {
 		String criteriosJson = new Gson().toJson(criterios);
 		return new ResponseEntity<String>(criteriosJson, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/crearTipoTarea/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
+	public ResponseEntity<String> crearTipoTarea(HttpServletResponse response, @RequestBody String tipoTareaData) {
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String datosUsuario = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+
+		try {
+			TiposTareasEntity nuevoTipo = mapper.readValue(tipoTareaData, TiposTareasEntity.class);
+
+			UsuariosEntity usuariosEntity = new UsuariosEntity();
+
+			if (nuevoTipo.getIdTiposTareas() != null) {
+				session.update(nuevoTipo);
+			} else {
+				session.save(nuevoTipo);
+			}
+
+			session.getTransaction().commit();
+
+			String json = new Gson().toJson("Tipo tarea creada creado");
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+
+		} catch (Exception e) {
+			String json = new Gson().toJson("No se pudo crear tipo tarea");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@RequestMapping(value = "/getTiposTareas/", method = RequestMethod.GET)
 	public ResponseEntity<String> getAllTiposTareas(HttpServletResponse response) {
@@ -269,15 +300,17 @@ public class TareasController {
 
 		try {
 			Criteria criteria = session.createCriteria(TiposTareasEntity.class, "root");
+			criteria.add(Restrictions.eq("estado", "ACT"));
+
 			tiposTareas = (Collection<TiposTareasEntity>) criteria.list();
 			System.out.println(tiposTareas);
 			session.flush();
+			String criteriosJson = new Gson().toJson(tiposTareas);
+			return new ResponseEntity<String>(criteriosJson, HttpStatus.OK);
 		} catch (Exception e) {
-
+			String json = new Gson().toJson("No se pudo obtener tipos tarea");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		String criteriosJson = new Gson().toJson(tiposTareas);
-		return new ResponseEntity<String>(criteriosJson, HttpStatus.OK);
-
 	}
 
 	public static byte[] loadFile(File file) {
@@ -360,7 +393,6 @@ public class TareasController {
 			String json = new Gson().toJson("No se pudo crear tarea");
 			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@RequestMapping(value = "/enviarTarea/", method = RequestMethod.POST)
