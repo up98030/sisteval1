@@ -11,7 +11,7 @@ public class TareasVO {
 	private String nombreTarea;
 	private String descripcionTarea;
 	private int idModulo;
-	private String tipoTarea;
+	private Integer idTipoTarea;
 	private int idCreadorTarea;
 	private String estado;
 	private Date fechaInicio;
@@ -46,11 +46,17 @@ public class TareasVO {
 	public void setIdModulo(int idModulo) {
 		this.idModulo = idModulo;
 	}
-	public String getTipoTarea() {
-		return tipoTarea;
+	/**
+	 * @return the idTipoTarea
+	 */
+	public Integer getIdTipoTarea() {
+		return idTipoTarea;
 	}
-	public void setTipoTarea(String tipoTarea) {
-		this.tipoTarea = tipoTarea;
+	/**
+	 * @param idTipoTarea the idTipoTarea to set
+	 */
+	public void setIdTipoTarea(Integer idTipoTarea) {
+		this.idTipoTarea = idTipoTarea;
 	}
 	public int getIdCreadorTarea() {
 		return idCreadorTarea;

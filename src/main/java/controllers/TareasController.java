@@ -156,17 +156,17 @@ public class TareasController {
 
 			if (tareaUsuarioVO.getIdUsuario() != null) {
 				criteria.add(Restrictions.eq("idUsuario", tareaUsuarioVO.getIdUsuario()));
-				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION")) {
-					criteria.add(
-							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-				}
-				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA")) {
-					criteria.add(
-							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-				}
+//				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION")) {
+//					criteria.add(
+//							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+//				}
+//				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA")) {
+//					criteria.add(
+//							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+//				}
 			}
 			criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
-			if (tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null) {
+			if (tareaUsuarioVO.getTareasEntity() != null && tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null) {
 				criteria.add(Restrictions.eq("tareasEntity.idCreadorTarea",
 						tareaUsuarioVO.getTareasEntity().getIdCreadorTarea()));
 			}
@@ -185,6 +185,7 @@ public class TareasController {
 			projections.add(Projections.property("idUsuario"), "tareasUsuariosEntity.idUsuario");
 			projections.add(Projections.property("idTarea"), "tareasUsuariosEntity.idTarea");
 			projections.add(Projections.property("ObservacionesDocente"), "tareasUsuariosEntity.ObservacionesDocente");
+			projections.add(Projections.property("idTipoTarea"), "tareasUsuariosEntity.idTipoTarea");
 			projections.add(Projections.property("ArchivoEnviado"), "tareasUsuariosEntity.ArchivoEnviado");
 			projections.add(Projections.property("FechaEnvio"), "tareasUsuariosEntity.FechaEnvio");
 			projections.add(Projections.property("estado"), "tareasUsuariosEntity.estado");
@@ -283,6 +284,7 @@ public class TareasController {
 			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 
 	@RequestMapping(value = "/getTiposTareas/", method = RequestMethod.GET)
 	public ResponseEntity<String> getAllTiposTareas(HttpServletResponse response) {
@@ -359,7 +361,7 @@ public class TareasController {
 			tareasEntity.setFechaInicio(new Date());
 			tareasEntity.setFechaFin(tareaVO.getFechaFin());
 			tareasEntity.setEstado("ACT");
-			tareasEntity.setTipoTarea(tareaVO.getTipoTarea());
+			tareasEntity.setIdTipoTarea(tareaVO.getIdTipoTarea());
 			tareasEntity.setIdCreadorTarea(tareaVO.getIdCreadorTarea());
 			tareasEntity.setCriterios(tareaVO.getCriterios());
 			tareasEntity.setIdModulo(1);

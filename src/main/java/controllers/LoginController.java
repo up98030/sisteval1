@@ -18,7 +18,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -88,19 +87,19 @@ public class LoginController {
 			int contador = 0;
 			Integer tareasPendientes = 0;
 			Integer reunionesPendientes = 0;
-			for (TareasUsuariosEntity tarea : tareasReunionesUsuario) {
-				if (tarea.getTareasEntity().getTipoTarea().equals("TAREA") && tarea.getEstado().equals("CLF")
-						&& tarea.getCalificacion() != null) {
-					promedio += tarea.getCalificacion();
-					contador++;
-				}
-				if (tarea.getTareasEntity().getTipoTarea().equals("TAREA") && tarea.getEstado().equals("CRE")) {
-					tareasPendientes++;
-				}
-				if (tarea.getTareasEntity().getTipoTarea().equals("REUNION") && tarea.getEstado().equals("CRE")) {
-					reunionesPendientes++;
-				}
-			}
+//			for (TareasUsuariosEntity tarea : tareasReunionesUsuario) {
+//				if (tarea.getTareasEntity().getTipoTarea().equals("TAREA") && tarea.getEstado().equals("CLF")
+//						&& tarea.getCalificacion() != null) {
+//					promedio += tarea.getCalificacion();
+//					contador++;
+//				}
+//				if (tarea.getTareasEntity().getTipoTarea().equals("TAREA") && tarea.getEstado().equals("CRE")) {
+//					tareasPendientes++;
+//				}
+//				if (tarea.getTareasEntity().getTipoTarea().equals("REUNION") && tarea.getEstado().equals("CRE")) {
+//					reunionesPendientes++;
+//				}
+//			}
 			summary.setTareasPendientes(tareasPendientes);
 			summary.setReunionesPendientes(reunionesPendientes);
 

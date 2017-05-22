@@ -33,8 +33,8 @@ public class TareasEntity {
     @Column(name = "IDMODULO")
     private Integer idModulo;
     
-    @Column(name = "tipoTarea")
-    private String tipoTarea;
+    @Column(name = "idTipoTarea")
+    private Integer idTipoTarea;
     
     @Column(name = "idCreadorTarea")
     private Integer idCreadorTarea;
@@ -139,13 +139,19 @@ public class TareasEntity {
 	public void setCriterios(String criterios) {
 		this.criterios = criterios;
 	}
-
-	public String getTipoTarea() {
-		return tipoTarea;
+	
+	/**
+	 * @return the idTipoTarea
+	 */
+	public Integer getIdTipoTarea() {
+		return idTipoTarea;
 	}
 
-	public void setTipoTarea(String tipoTarea) {
-		this.tipoTarea = tipoTarea;
+	/**
+	 * @param idTipoTarea the idTipoTarea to set
+	 */
+	public void setIdTipoTarea(Integer idTipoTarea) {
+		this.idTipoTarea = idTipoTarea;
 	}
 
 	/**
