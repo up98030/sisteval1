@@ -100,6 +100,51 @@ public class UsuariosController {
 			return new ResponseEntity<String>("Error al obtener lista perfiles", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@RequestMapping(value = "/usuariosModulo/", method = RequestMethod.GET)
+	public ResponseEntity<String> usuariosModulo(HttpServletResponse response, @RequestBody String moduloData) {
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+
+		ObjectMapper mapper = new ObjectMapper();
+		String datosUsuario = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+
+		try {
+			ModulosEntity modulo = mapper.readValue(moduloData, ModulosEntity.class);
+
+			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
+			srb.applySettings(cf.getProperties());
+			ServiceRegistry sr = srb.buildServiceRegistry();
+			SessionFactory sf = cf.buildSessionFactory(sr);
+
+			StringBuilder hql = new StringBuilder();
+			String select = "SELECT usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT' ";
+			hql.append(select);
+			if(modulo.getIdModulo() != null){
+				hql.append(" AND idModulo = " + modulo.getIdModulo());
+			}
+			Query query = session.createQuery(hql.toString());
+			List<UsuariosVo> usuarios;
+			List results = query.list();
+			usuarios = query.list();
+			String json = new Gson().toJson(usuarios);
+
+			// System.out.println("Loaded object Student name is: " +
+			// std.getNombreTarea());
+			// System.out.println("LOS RESULTADOS SON: " + results);
+
+			session.close();
+			sf.close();
+
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+
+		} catch (Exception e) {
+			String json = new Gson().toJson("No se pudo crear modulo");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 
 	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET)
 	public ResponseEntity<String> listAllUsers(HttpServletResponse response) {

@@ -6,12 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.logging.Logger;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 //import org.apache.commons.codec.binary.Base64;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -55,6 +59,8 @@ import util.HibernateUtil;
 @RequestMapping("/ws")
 public class TareasController {
 
+	public static final Logger LOGGER = Logger.getLogger(TareasController.class.getName());
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/buscarUsuariosModulo/", method = RequestMethod.POST)
 	public ResponseEntity<String> buscarUsuariosModulo(HttpServletResponse response, @RequestBody String moduloData) {
@@ -90,11 +96,11 @@ public class TareasController {
 		}
 	}
 
-	@RequestMapping(value = "/tareas/{idTarea}/{idUsuario}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/tareas/{idTarea}/{idUsuario}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<byte[]> obtenerArchivoBinesProductos(@PathVariable("idTarea") Integer idTarea,
-			@PathVariable("idUsuario") Integer idUsuario) {
+	public void obtenerArchivoBinesProductos(@PathVariable("idTarea") Integer idTarea,
+			@PathVariable("idUsuario") Integer idUsuario, HttpServletResponse response) {
 
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
@@ -113,19 +119,51 @@ public class TareasController {
 
 			TareasEntity tarea = (TareasEntity) query.uniqueResult();
 
-			tarea.getArchivoAdjunto();
+			/**
+			 * pablo generA 
+			 * pablo eso que tienes en la base no sirve, hace falta poner algo bien
+			 * estas?si
+			 * a ya pero bueno ya aparece eso ya le puedo presentar mañana 
+			 * mil gracias Michel!!!!!1
+			 * :)
+			 * pero puedes poner algo bueno en la base para probar
+			 * mmm, no se esq guardo desde la aplicacion no se si se pueda ya voy a entrar 
+			 * mira vamos a hacer una prueba, cogiendo una imagen del disco duro y mostrandola en la web
+			 * si? ok
+			 * 
+			 * pablo? viste? si entonces algo esta guardando mal pero ya es eso no mas
+			 * bueno ok
+			 * GRACIAS MICHEELLL
+			 * !!!
+			 * d Bale dale
+			 * YO TE RECOMPENSO ESTE FERIADO
+			 * ;)jajajajajajajajajaja
+			 * 
+			 */
+			if (tarea != null) {
+				LOGGER.info("size file: " + (tarea.getArchivoAdjunto() != null ? tarea.getArchivoAdjunto().length : 0));
+			}
 			final byte[] lines = tarea.getArchivoAdjunto();
-			;
+			
+			// esto es para probar que el archivo que esta en la base es bueno 
+//			FileUtils.writeByteArrayToFile(new File("d:\\prueba\\1.png"), lines);
+			
+			Path path = Paths.get("d:/prueba/test.jpg");
+			byte[] data = Files.readAllBytes(path);
 
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.setContentType(MediaType.parseMediaType("text/plain"));
+			responseHeaders.setContentType(MediaType.IMAGE_PNG);
 			responseHeaders.setCacheControl("private, max-age=0");
-			String extension = "";
-			responseHeaders.add("Content-Disposition", "attachment; filename=tarea." + extension);
+			responseHeaders.add("Content-Disposition", "attachment; filename=tarea.png");
+			ServletOutputStream responseOutputStream = response.getOutputStream();
+		    responseOutputStream.write(data);
+		    responseOutputStream.flush();
+		    responseOutputStream.close();
 
-			return new ResponseEntity<byte[]>(lines, HttpStatus.OK);
+//			return new ResponseEntity<byte[]>(lines, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<byte[]>(new byte[0], HttpStatus.BAD_REQUEST);
+			LOGGER.severe(e.getMessage());
+//			return new ResponseEntity<byte[]>(new byte[0], HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -156,17 +194,24 @@ public class TareasController {
 
 			if (tareaUsuarioVO.getIdUsuario() != null) {
 				criteria.add(Restrictions.eq("idUsuario", tareaUsuarioVO.getIdUsuario()));
-//				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION")) {
-//					criteria.add(
-//							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-//				}
-//				if (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA")) {
-//					criteria.add(
-//							Restrictions.eq("tareasEntity.tipoTarea", tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-//				}
+				// if
+				// (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION"))
+				// {
+				// criteria.add(
+				// Restrictions.eq("tareasEntity.tipoTarea",
+				// tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+				// }
+				// if
+				// (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA"))
+				// {
+				// criteria.add(
+				// Restrictions.eq("tareasEntity.tipoTarea",
+				// tareaUsuarioVO.getTareasEntity().getTipoTarea()));
+				// }
 			}
 			criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
-			if (tareaUsuarioVO.getTareasEntity() != null && tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null) {
+			if (tareaUsuarioVO.getTareasEntity() != null
+					&& tareaUsuarioVO.getTareasEntity().getIdCreadorTarea() != null) {
 				criteria.add(Restrictions.eq("tareasEntity.idCreadorTarea",
 						tareaUsuarioVO.getTareasEntity().getIdCreadorTarea()));
 			}
@@ -253,8 +298,9 @@ public class TareasController {
 		String criteriosJson = new Gson().toJson(criterios);
 		return new ResponseEntity<String>(criteriosJson, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/crearTipoTarea/", method = RequestMethod.POST, consumes = {"application/xml", "application/json"})
+
+	@RequestMapping(value = "/crearTipoTarea/", method = RequestMethod.POST, consumes = { "application/xml",
+			"application/json" })
 	public ResponseEntity<String> crearTipoTarea(HttpServletResponse response, @RequestBody String tipoTareaData) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
@@ -284,7 +330,6 @@ public class TareasController {
 			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 
 	@RequestMapping(value = "/getTiposTareas/", method = RequestMethod.GET)
 	public ResponseEntity<String> getAllTiposTareas(HttpServletResponse response) {
