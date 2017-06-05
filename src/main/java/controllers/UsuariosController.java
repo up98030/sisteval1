@@ -100,7 +100,7 @@ public class UsuariosController {
 			return new ResponseEntity<String>("Error al obtener lista perfiles", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@RequestMapping(value = "/usuariosModulo/", method = RequestMethod.GET)
 	public ResponseEntity<String> usuariosModulo(HttpServletResponse response, @RequestBody String moduloData) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
@@ -121,9 +121,10 @@ public class UsuariosController {
 			StringBuilder hql = new StringBuilder();
 			String select = "SELECT usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT' ";
 			hql.append(select);
-			if(modulo.getIdModulo() != null){
+			if (modulo.getIdModulo() != null) {
 				hql.append(" AND idModulo = " + modulo.getIdModulo());
 			}
+			hql.append(" GROUP BY nombreUsuario");
 			Query query = session.createQuery(hql.toString());
 			List<UsuariosVo> usuarios;
 			List results = query.list();
@@ -144,9 +145,8 @@ public class UsuariosController {
 			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 
-	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET)
+	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public ResponseEntity<String> listAllUsers(HttpServletResponse response) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
@@ -226,25 +226,28 @@ public class UsuariosController {
 		try {
 			UsuariosVo usuarioVO = mapper.readValue(userData, UsuariosVo.class);
 
-			UsuariosEntity usuariosEntity = new UsuariosEntity();
+			for (ModulosEntity modulos: usuarioVO.getModulos()) {
+				UsuariosEntity usuariosEntity = new UsuariosEntity();
 
-			usuariosEntity.setNombreUsuario(usuarioVO.getNombreUsuario());
-			usuariosEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
-			usuariosEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
-			usuariosEntity.setPassword(usuarioVO.getPassword());
-			usuariosEntity.setIdPerfil(usuarioVO.getIdPerfil());
-			usuariosEntity.setIdModulo(usuarioVO.getIdModulo());
-			usuariosEntity.setEstado(usuarioVO.getEstado());
+				usuariosEntity.setNombreUsuario(usuarioVO.getNombreUsuario());
+				usuariosEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
+				usuariosEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
+				usuariosEntity.setPassword(usuarioVO.getPassword());
+				usuariosEntity.setIdPerfil(usuarioVO.getIdPerfil());
+				usuariosEntity.setIdModulo(modulos.getIdModulo());
+				usuariosEntity.setEstado(usuarioVO.getEstado());
 
-			if (usuarioVO.getIdUsuario() != null) {
-				usuariosEntity.setIdUsuario(usuarioVO.getIdUsuario());
-				session.update(usuariosEntity);
-			} else {
-				session.save(usuariosEntity);
+				if (usuarioVO.getIdUsuario() != null) {
+					usuariosEntity.setIdUsuario(usuarioVO.getIdUsuario());
+					session.update(usuariosEntity);
+				} else {
+					session.save(usuariosEntity);
+				}
+
 			}
-
+			
 			session.getTransaction().commit();
-
+			session.close();
 			String json = new Gson().toJson("Usuario Creado");
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 

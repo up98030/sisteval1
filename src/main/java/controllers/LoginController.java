@@ -144,7 +144,7 @@ public class LoginController {
 
 			Session session = sf.openSession();
 
-			String hql = "FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT' and usuarios.nombreUsuario = '"
+			String hql = "FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT' and usuarios.correoUsuario = '"
 					+ username + "' and usuarios.password = '" + passwd + "'";
 			Query query = session.createQuery(hql);
 			query.setMaxResults(1);

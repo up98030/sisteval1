@@ -1,5 +1,10 @@
 package ec.com.data.vo;
 
+import java.util.Collection;
+
+import entity.ModulosEntity;
+import entity.PerfilesEntity;
+
 public class UsuariosVo {
 	
 	private Integer idUsuario;
@@ -8,6 +13,7 @@ public class UsuariosVo {
 	private String password;
 	private String nombreCompleto;
 	private Integer idPerfil;
+	private Collection<ModulosEntity> modulos;
 	private String estado;
 	private Integer idModulo;
 	private Integer idPeriodo;
@@ -71,6 +77,18 @@ public class UsuariosVo {
 	 */
 	public void setIdPeriodo(Integer idPeriodo) {
 		this.idPeriodo = idPeriodo;
+	}
+	/**
+	 * @return the modulos
+	 */
+	public Collection<ModulosEntity> getModulos() {
+		return modulos;
+	}
+	/**
+	 * @param modulos the modulos to set
+	 */
+	public void setModulos(Collection<ModulosEntity> modulos) {
+		this.modulos = modulos;
 	}
 	
 }

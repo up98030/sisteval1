@@ -77,10 +77,15 @@ public class TareasController {
 			SessionFactory sf = cf.buildSessionFactory(sr);
 
 			Session session = sf.openSession();
+			
+			StringBuilder hql = new StringBuilder();
 
-			String hql = "FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT' and usuarios.idModulo = '"
-					+ modulo.getIdModulo() + "'";
-			Query query = session.createQuery(hql);
+			hql.append("SELECT distinct usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT'");
+			if(modulo.getIdModulo() != null){
+				hql.append(" AND usuarios.idModulo = " + modulo.getIdModulo()); 
+			}
+			hql.append(" GROUP BY nombreUsuario");
+			Query query = session.createQuery(hql.toString());
 
 			Collection<UsuariosEntity> listaUsuariosModulo = (Collection<UsuariosEntity>) query.list();
 
@@ -389,7 +394,7 @@ public class TareasController {
 
 	@RequestMapping(value = "/crearTarea/", method = RequestMethod.POST, consumes = { "application/xml",
 			"application/json" })
-	public ResponseEntity<String> login(HttpServletResponse response, @RequestBody String tareaData) {
+	public ResponseEntity<String> crearTarea(HttpServletResponse response, @RequestBody String tareaData) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
 		ObjectMapper mapper = new ObjectMapper();
