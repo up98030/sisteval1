@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 //import org.apache.commons.codec.binary.Base64;
 import org.hibernate.Criteria;
@@ -417,10 +418,11 @@ public class TareasController {
 			tareasEntity.setIdModulo(1);
 			tareasEntity.setDescripcionTarea(tareaVO.getDescripcionTarea());
 			tareasEntity.setExtensionArchivo(tareaVO.getExtensionArchivo());
-			if (tareaVO.getArchivoAdjunto() != null) {
-				byte[] decoded = org.apache.commons.codec.binary.Base64
-						.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
-				tareasEntity.setArchivoAdjunto(decoded);
+			if (tareaVO.getArchivoAdjunto() != null) {		
+				String base64Image = tareaVO.getArchivoAdjunto().split(",")[1];
+				byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+//				byte[] decoded = Base64.decodeBase64(tareaVO.getArchivoAdjunto());
+				tareasEntity.setArchivoAdjunto(imageBytes);
 			}
 			// tareasEntity.setArchivoAdjunto(Base64.getDecoder().decode(tareaVO.getArchivoAdjunto()));
 			// tareasEntity.setArchivoAdjunto(decodeFileToBase64(tareaVO.getArchivoAdjunto()));
@@ -464,7 +466,9 @@ public class TareasController {
 			TareasUsuariosVO tareaVO = mapper.readValue(tareaData, TareasUsuariosVO.class);
 
 			if (tareaVO.getCalificacion() == null || tareaVO.getCalificacion().toString().isEmpty()) {
-				decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
+				if(tareaVO.getArchivoAdjunto() != null){
+					decoded = org.apache.commons.codec.binary.Base64.decodeBase64(tareaVO.getArchivoAdjunto().getBytes());
+				}
 				hql = "UPDATE TareasUsuariosEntity SET ObservacionesDocente = '" + tareaVO.getObservacionesDocente()
 						+ "' , estado ='" + tareaVO.getEstado() + "', ArchivoEnviado='" + decoded + "' ,FechaEnvio = '"
 						+ currentTime + "' where idTareaUsuario =" + tareaVO.getIdTareaUsuario();

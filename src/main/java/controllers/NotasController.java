@@ -57,7 +57,7 @@ public class NotasController {
 		     criteria.createAlias("tareasEntity", "tareasEntity");	
 		     criteria.createAlias("usuariosEntity", "usuariosEntity");
 		     //condiciones
-		     criteria.add(Restrictions.eq("tareasEntity.tipoTarea","TAREA"));
+//		     criteria.add(Restrictions.eq("tareasEntity.tipoTarea","TAREA"));
 		     //Si no tiene estado trae de todos los estados
 		     if(notasVO.getEstado() != null){
 			     criteria.add(Restrictions.eq("estado",notasVO.getEstado()));
