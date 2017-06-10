@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TareasUsuarios")
@@ -55,6 +56,9 @@ public class TareasUsuariosEntity {
 	 
 	 @Column(name = "ObservacionCalificacion")
 	 private String ObservacionCalificacion;
+	 
+	 @Transient
+	 private String base64File;
 
 	public Integer getIdTareaUsuario() {
 		return idTareaUsuario;
@@ -144,6 +148,19 @@ public class TareasUsuariosEntity {
 	public void setObservacionCalificacion(String observacionCalificacion) {
 		ObservacionCalificacion = observacionCalificacion;
 	}
-	
+
+	/**
+	 * @return the base64File
+	 */
+	public String getBase64File() {
+		return base64File;
+	}
+
+	/**
+	 * @param base64File the base64File to set
+	 */
+	public void setBase64File(String base64File) {
+		this.base64File = base64File;
+	}
 	
 }

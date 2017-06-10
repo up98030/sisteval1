@@ -105,7 +105,7 @@ public class TareasController {
 	@RequestMapping(value = "/tareas/{idTarea}/{idUsuario}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void obtenerArchivoBinesProductos(@PathVariable("idTarea") Integer idTarea,
+	public ResponseEntity<byte[]> obtenerArchivoBinesProductos(@PathVariable("idTarea") Integer idTarea,
 			@PathVariable("idUsuario") Integer idUsuario, HttpServletResponse response) {
 
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
@@ -166,10 +166,10 @@ public class TareasController {
 		    responseOutputStream.flush();
 		    responseOutputStream.close();
 
-//			return new ResponseEntity<byte[]>(lines, HttpStatus.OK);
+			return new ResponseEntity<byte[]>(lines, HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.severe(e.getMessage());
-//			return new ResponseEntity<byte[]>(new byte[0], HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<byte[]>(new byte[0], HttpStatus.BAD_REQUEST);
 		}
 
 	}
@@ -200,20 +200,6 @@ public class TareasController {
 
 			if (tareaUsuarioVO.getIdUsuario() != null) {
 				criteria.add(Restrictions.eq("idUsuario", tareaUsuarioVO.getIdUsuario()));
-				// if
-				// (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("REUNION"))
-				// {
-				// criteria.add(
-				// Restrictions.eq("tareasEntity.tipoTarea",
-				// tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-				// }
-				// if
-				// (tareaUsuarioVO.getTareasEntity().getTipoTarea().equals("TAREA"))
-				// {
-				// criteria.add(
-				// Restrictions.eq("tareasEntity.tipoTarea",
-				// tareaUsuarioVO.getTareasEntity().getTipoTarea()));
-				// }
 			}
 			criteria.add(Restrictions.eq("estado", tareaUsuarioVO.getEstado()));
 			if (tareaUsuarioVO.getTareasEntity() != null
@@ -242,21 +228,12 @@ public class TareasController {
 			projections.add(Projections.property("estado"), "tareasUsuariosEntity.estado");
 
 			Collection<TareasUsuariosEntity> tareas = (Collection<TareasUsuariosEntity>) criteria.list();
+			
+			for(TareasUsuariosEntity tarea : tareas){
+				
+				tarea.setBase64File(Base64.encodeBase64String(tarea.getTareasEntity().getArchivoAdjunto()));
+			}
 			String json = new Gson().toJson(tareas);
-
-			// TareasEntity std = (TareasEntity)
-			// session.load(TareasEntity.class, new Long(2));
-
-			/*
-			 * String hql =
-			 * "FROM entity.TareasEntity tareas where tareas.estado = 'ACT'";
-			 * Query query = session.createQuery(hql); List<TareaVo> tarea; List
-			 * results = query.list(); tarea = query.list();
-			 */
-
-			// System.out.println("Loaded object Student name is: " +
-			// std.getNombreTarea());
-			// System.out.println("LOS RESULTADOS SON: " + results);
 
 			session.close();
 			sf.close();
