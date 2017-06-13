@@ -32,6 +32,7 @@
 		<mapping class="entity.TiposTareasEntity"></mapping>
 		<mapping class="entity.PerfilesEntity"></mapping>
 		<mapping class="entity.PeriodosEntity"></mapping>
+		<mapping class="entity.GruposUsuariosEntity"></mapping>
 		
 		
 	</session-factory>

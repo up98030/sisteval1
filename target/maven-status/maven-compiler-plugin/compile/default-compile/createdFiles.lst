@@ -24,6 +24,7 @@ controllers\NotasController.class
 ec\com\data\vo\IdUsuarioVO.class
 entity\TareasEntity.class
 ec\com\data\vo\UserSummaryVO.class
+entity\GruposUsuariosEntity.class
 entity\StudentEntity.class
 adminUtil\CalificarTareaUtil.class
 util\TareasSelectUtil.class

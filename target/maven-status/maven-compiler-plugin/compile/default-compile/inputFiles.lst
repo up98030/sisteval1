@@ -1,6 +1,7 @@
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\CriteriosVO.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\TareaVo.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\entity\TareasEntity.java
+D:\WorkspaceSistEval\sistEval1\src\main\java\entity\GruposUsuariosEntity.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\TareasUsuariosVO.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\gui\TareasController.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\controllers\UsuariosController.java

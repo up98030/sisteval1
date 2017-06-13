@@ -13,6 +13,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 import ec.com.data.vo.UsuariosVo;
 import entity.ModulosEntity;
 import entity.PerfilesEntity;
+import entity.GruposUsuariosEntity;
 import entity.UsuariosEntity;
 import util.HibernateUtil;
 
@@ -146,6 +148,53 @@ public class UsuariosController {
 		}
 	}
 
+	@RequestMapping(value = "/obtenerGruposUsuario/", method = RequestMethod.POST, consumes = { "application/xml",
+			"application/json" })
+	public ResponseEntity<String> getGrupoUsuario(HttpServletResponse response, @RequestBody String userData) {
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+		
+		try{
+			ObjectMapper mapper = new ObjectMapper();
+			String datosUsuario = null;
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+
+			UsuariosEntity usuarioEntity = mapper.readValue(userData, UsuariosEntity.class);
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+			response.setHeader("Access-Control-Max-Age", "3600");
+			response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
+			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
+			srb.applySettings(cf.getProperties());
+			ServiceRegistry sr = srb.buildServiceRegistry();
+			SessionFactory sf = cf.buildSessionFactory(sr);
+
+			// TareasEntity std = (TareasEntity) session.load(TareasEntity.class,
+			// new Long(2));
+
+			String hql = "SELECT grupos FROM entity.GruposUsuariosEntity grupos where estado = 'ACT' AND grupos.idUsuario = " + usuarioEntity.getIdUsuario() ;
+			Query query = session.createQuery(hql);
+			List<GruposUsuariosEntity> gruposUsuarios;
+			List results = query.list();
+			gruposUsuarios = query.list();
+			String json = new Gson().toJson(gruposUsuarios);
+
+			// System.out.println("Loaded object Student name is: " +
+			// std.getNombreTarea());
+			// System.out.println("LOS RESULTADOS SON: " + results);
+
+			session.close();
+			sf.close();
+
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+		}catch(Exception e){
+			String json = new Gson().toJson("No se pudo crear modulo");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public ResponseEntity<String> listAllUsers(HttpServletResponse response) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
@@ -226,28 +275,34 @@ public class UsuariosController {
 		try {
 			UsuariosVo usuarioVO = mapper.readValue(userData, UsuariosVo.class);
 
-			for (ModulosEntity modulos: usuarioVO.getModulos()) {
-				UsuariosEntity usuariosEntity = new UsuariosEntity();
+			UsuariosEntity usuariosEntity = new UsuariosEntity();
 
-				usuariosEntity.setNombreUsuario(usuarioVO.getNombreUsuario());
-				usuariosEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
-				usuariosEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
-				usuariosEntity.setPassword(usuarioVO.getPassword());
-				usuariosEntity.setIdPerfil(usuarioVO.getIdPerfil());
-				usuariosEntity.setIdModulo(modulos.getIdModulo());
-				usuariosEntity.setEstado(usuarioVO.getEstado());
+			usuariosEntity.setNombreUsuario(usuarioVO.getNombreUsuario());
+			usuariosEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
+			usuariosEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
+			usuariosEntity.setPassword(usuarioVO.getPassword());
+			usuariosEntity.setIdPerfil(usuarioVO.getIdPerfil());
+			usuariosEntity.setEstado(usuarioVO.getEstado());
 
-				if (usuarioVO.getIdUsuario() != null) {
-					usuariosEntity.setIdUsuario(usuarioVO.getIdUsuario());
-					session.update(usuariosEntity);
-				} else {
-					session.save(usuariosEntity);
-				}
-
+			if (usuarioVO.getIdUsuario() != null) {
+				usuariosEntity.setIdUsuario(usuarioVO.getIdUsuario());
+				session.update(usuariosEntity);
+			} else {
+				session.save(usuariosEntity);
 			}
-			
+
+			if (CollectionUtils.isEmpty(usuarioVO.getModulos())) {
+				// Esta actualizando o inactivando
+			} else {
+				for (ModulosEntity modulos : usuarioVO.getModulos()) {
+					GruposUsuariosEntity grupoUsuario = new GruposUsuariosEntity();
+					grupoUsuario.setIdUsuario(usuariosEntity.getIdUsuario());
+					grupoUsuario.setIdModulo(modulos.getIdModulo());
+					grupoUsuario.setEstado("ACT");
+					session.save(grupoUsuario);
+				}
+			}
 			session.getTransaction().commit();
-			session.close();
 			String json = new Gson().toJson("Usuario Creado");
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 
