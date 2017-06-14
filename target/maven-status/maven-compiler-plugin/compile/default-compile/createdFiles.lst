@@ -34,5 +34,6 @@ controllers\Test.class
 ec\com\data\vo\TareaVo.class
 util\HibernateUtil.class
 gui\TareasController.class
+ec\com\data\vo\EditarUsuarioVO.class
 ec\com\data\vo\TareasVO.class
 entity\PerfilesEntity.class

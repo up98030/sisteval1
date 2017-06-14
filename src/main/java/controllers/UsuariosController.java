@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,10 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import ec.com.data.vo.EditarUsuarioVO;
 import ec.com.data.vo.UsuariosVo;
+import entity.GruposUsuariosEntity;
 import entity.ModulosEntity;
 import entity.PerfilesEntity;
-import entity.GruposUsuariosEntity;
 import entity.UsuariosEntity;
 import util.HibernateUtil;
 
@@ -148,12 +150,62 @@ public class UsuariosController {
 		}
 	}
 
+	@RequestMapping(value = "/actualizarUsuarioGrupos/", method = RequestMethod.POST, consumes = { "application/xml",
+			"application/json" })
+	public ResponseEntity<String> editarUsuario(HttpServletResponse response, @RequestBody String userData)
+			throws Exception {
+
+		try {
+			Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+			ObjectMapper mapper = new ObjectMapper();
+			String datosUsuario = null;
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			EditarUsuarioVO usuarioVO = mapper.readValue(userData, EditarUsuarioVO.class);
+
+			/*** Actualiza Usuario ****/
+			UsuariosEntity usuarioEntity = new UsuariosEntity();
+			usuarioEntity.setIdUsuario(usuarioVO.getIdUsuario());
+			usuarioEntity.setCorreoUsuario(usuarioVO.getCorreoUsuario());
+			usuarioEntity.setNombreCompleto(usuarioVO.getNombreCompleto());
+			usuarioEntity.setPassword(usuarioVO.getPassword());
+			usuarioEntity.setEstado("ACT");
+			usuarioEntity.setIdPerfil(usuarioVO.getIdPerfil());
+			session.update(usuarioEntity);
+			/*** Inactiva Grupos ****/
+			String hql = "SELECT grupos FROM entity.GruposUsuariosEntity grupos where estado = 'ACT' AND grupos.idUsuario = "
+					+ usuarioEntity.getIdUsuario();
+			Query query = session.createQuery(hql);
+			Collection<GruposUsuariosEntity> gruposUsuarios;
+			gruposUsuarios = query.list();			
+			for(GruposUsuariosEntity gruposUsuario : gruposUsuarios){
+				gruposUsuario.setEstado("INA");
+				session.update(gruposUsuario);
+			}
+			/*** Crea nuevos grupos ****/
+			for (ModulosEntity grupo : usuarioVO.getGrupos()) {
+				GruposUsuariosEntity grupoUsuario = new GruposUsuariosEntity();
+				grupoUsuario.setIdUsuario(usuarioEntity.getIdUsuario());
+				grupoUsuario.setIdModulo(grupo.getIdModulo());
+				grupoUsuario.setEstado("ACT");
+				session.save(grupoUsuario);
+			}
+			session.getTransaction().commit();
+
+			return new ResponseEntity<String>("Usuario actualizado", HttpStatus.OK);
+		} catch (Exception e) {
+			String json = new Gson().toJson("No se pudo actualizar usuario");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	@RequestMapping(value = "/obtenerGruposUsuario/", method = RequestMethod.POST, consumes = { "application/xml",
 			"application/json" })
 	public ResponseEntity<String> getGrupoUsuario(HttpServletResponse response, @RequestBody String userData) {
 		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
-		
-		try{
+
+		try {
 			ObjectMapper mapper = new ObjectMapper();
 			String datosUsuario = null;
 			Session session = HibernateUtil.getSessionFactory().openSession();
@@ -170,10 +222,12 @@ public class UsuariosController {
 			ServiceRegistry sr = srb.buildServiceRegistry();
 			SessionFactory sf = cf.buildSessionFactory(sr);
 
-			// TareasEntity std = (TareasEntity) session.load(TareasEntity.class,
+			// TareasEntity std = (TareasEntity)
+			// session.load(TareasEntity.class,
 			// new Long(2));
 
-			String hql = "SELECT grupos FROM entity.GruposUsuariosEntity grupos where estado = 'ACT' AND grupos.idUsuario = " + usuarioEntity.getIdUsuario() ;
+			String hql = "SELECT grupos FROM entity.GruposUsuariosEntity grupos where estado = 'ACT' AND grupos.idUsuario = "
+					+ usuarioEntity.getIdUsuario();
 			Query query = session.createQuery(hql);
 			List<GruposUsuariosEntity> gruposUsuarios;
 			List results = query.list();
@@ -188,7 +242,7 @@ public class UsuariosController {
 			sf.close();
 
 			return new ResponseEntity<String>(json, HttpStatus.OK);
-		}catch(Exception e){
+		} catch (Exception e) {
 			String json = new Gson().toJson("No se pudo crear modulo");
 			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

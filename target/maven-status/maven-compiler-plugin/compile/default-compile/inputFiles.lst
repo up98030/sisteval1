@@ -26,6 +26,7 @@ D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\UserDataVo.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\UsuariosVo.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\TareasVO.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\entity\CriteriosEntity.java
+D:\WorkspaceSistEval\sistEval1\src\main\java\ec\com\data\vo\EditarUsuarioVO.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\adminUtil\CalificarTareaUtil.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\util\HibernateUtil.java
 D:\WorkspaceSistEval\sistEval1\src\main\java\controllers\LoginController.java
