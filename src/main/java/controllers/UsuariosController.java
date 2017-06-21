@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -229,9 +230,12 @@ public class UsuariosController {
 			String hql = "SELECT grupos FROM entity.GruposUsuariosEntity grupos where estado = 'ACT' AND grupos.idUsuario = "
 					+ usuarioEntity.getIdUsuario();
 			Query query = session.createQuery(hql);
-			List<GruposUsuariosEntity> gruposUsuarios;
-			List results = query.list();
+			Collection<GruposUsuariosEntity> gruposUsuarios;
+//			List results = query.list();
 			gruposUsuarios = query.list();
+			for(GruposUsuariosEntity grupo : gruposUsuarios){
+				grupo.setUsuariosEntity(null);
+			}
 			String json = new Gson().toJson(gruposUsuarios);
 
 			// System.out.println("Loaded object Student name is: " +
@@ -251,37 +255,53 @@ public class UsuariosController {
 
 	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public ResponseEntity<String> listAllUsers(HttpServletResponse response) {
-		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+		try{
+			Configuration cf = new Configuration().configure("hibernate.cfg.xml");
 
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+			response.setHeader("Access-Control-Max-Age", "3600");
+			response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 
-		ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
-		srb.applySettings(cf.getProperties());
-		ServiceRegistry sr = srb.buildServiceRegistry();
-		SessionFactory sf = cf.buildSessionFactory(sr);
+			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
+			srb.applySettings(cf.getProperties());
+			ServiceRegistry sr = srb.buildServiceRegistry();
+			SessionFactory sf = cf.buildSessionFactory(sr);
 
-		Session session = sf.openSession();
-		// TareasEntity std = (TareasEntity) session.load(TareasEntity.class,
-		// new Long(2));
+			Session session = sf.openSession();
+			// TareasEntity std = (TareasEntity) session.load(TareasEntity.class,
+			// new Long(2));
 
-		String hql = "SELECT usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT'";
-		Query query = session.createQuery(hql);
-		List<UsuariosVo> usuarios;
-		List results = query.list();
-		usuarios = query.list();
-		String json = new Gson().toJson(usuarios);
+			String hql = "SELECT usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT'";
+			Query query = session.createQuery(hql);
+			Collection<UsuariosEntity> usuarios;
+			usuarios = query.list();
+			Collection<UsuariosEntity> usuariosEntity = new ArrayList(usuarios.size());
+			for(UsuariosEntity usuario : usuarios){
+				UsuariosEntity usuarioEntity = new UsuariosEntity();
+				usuarioEntity.setIdUsuario(usuario.getIdUsuario());
+				usuarioEntity.setIdPerfil(usuario.getIdPerfil());
+				usuarioEntity.setCorreoUsuario(usuario.getCorreoUsuario());
+				usuarioEntity.setNombreCompleto(usuario.getNombreCompleto());
+				usuarioEntity.setEstado(usuario.getEstado());
+				usuariosEntity.add(usuarioEntity);
+			}
+			String json = new Gson().toJson(usuariosEntity);
 
-		// System.out.println("Loaded object Student name is: " +
-		// std.getNombreTarea());
-		// System.out.println("LOS RESULTADOS SON: " + results);
+			// System.out.println("Loaded object Student name is: " +
+			// std.getNombreTarea());
+			// System.out.println("LOS RESULTADOS SON: " + results);
 
-		session.close();
-		sf.close();
+			session.close();
+			sf.close();
 
-		return new ResponseEntity<String>(json, HttpStatus.OK);
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+//			return new ResponseEntity<Collection<UsuariosEntity>>(results, HttpStatus.OK);
+		}catch(Exception e){
+			String json = new Gson().toJson("Error al obtener usuarios");
+			return new ResponseEntity<String>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	@RequestMapping(value = "/crearModulo/", method = RequestMethod.POST, consumes = { "application/xml",

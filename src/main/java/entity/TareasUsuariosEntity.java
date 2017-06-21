@@ -28,6 +28,9 @@ public class TareasUsuariosEntity {
 	 @Column(name = "idTarea")
 	 private Integer idTarea;
 	 
+	 @Transient
+	 private Collection<GruposUsuariosEntity> gruposUsuariosEntity;
+	 
 	 @ManyToOne
 	 @JoinColumn(name="idTarea",referencedColumnName="idTarea", insertable = false, updatable = false)
 	 TareasEntity tareasEntity;
@@ -162,5 +165,20 @@ public class TareasUsuariosEntity {
 	public void setBase64File(String base64File) {
 		this.base64File = base64File;
 	}
+
+	/**
+	 * @return the gruposUsuariosEntity
+	 */
+	public Collection<GruposUsuariosEntity> getGruposUsuariosEntity() {
+		return gruposUsuariosEntity;
+	}
+
+	/**
+	 * @param gruposUsuariosEntity the gruposUsuariosEntity to set
+	 */
+	public void setGruposUsuariosEntity(Collection<GruposUsuariosEntity> gruposUsuariosEntity) {
+		this.gruposUsuariosEntity = gruposUsuariosEntity;
+	}
+	
 	
 }

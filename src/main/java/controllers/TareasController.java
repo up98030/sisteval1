@@ -82,10 +82,9 @@ public class TareasController {
 			StringBuilder hql = new StringBuilder();
 
 			hql.append("SELECT distinct usuarios FROM entity.UsuariosEntity usuarios where usuarios.estado = 'ACT'");
-			if(modulo.getIdModulo() != null){
-				hql.append(" AND usuarios.idModulo = " + modulo.getIdModulo()); 
-			}
-			hql.append(" GROUP BY nombreUsuario");
+//			if(modulo.getIdModulo() != null){
+//				hql.append(" AND usuarios.idModulo = " + modulo.getIdModulo()); 
+//			}
 			Query query = session.createQuery(hql.toString());
 
 			Collection<UsuariosEntity> listaUsuariosModulo = (Collection<UsuariosEntity>) query.list();
@@ -98,7 +97,7 @@ public class TareasController {
 			}
 
 		} catch (Exception e) {
-			return new ResponseEntity<String>("Error al encontrar usuarios", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Error al encontrar usuarios", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -2,8 +2,8 @@ package ec.com.data.vo;
 
 import java.util.Collection;
 
+import entity.GruposUsuariosEntity;
 import entity.ModulosEntity;
-import entity.PerfilesEntity;
 
 public class UsuariosVo {
 	
@@ -14,6 +14,7 @@ public class UsuariosVo {
 	private String nombreCompleto;
 	private Integer idPerfil;
 	private Collection<ModulosEntity> modulos;
+	private Collection<GruposUsuariosEntity> gruposUsuariosEntity;
 	private String estado;
 	private Integer idModulo;
 	private Integer idPeriodo;
@@ -89,6 +90,18 @@ public class UsuariosVo {
 	 */
 	public void setModulos(Collection<ModulosEntity> modulos) {
 		this.modulos = modulos;
+	}
+	/**
+	 * @return the gruposUsuariosEntity
+	 */
+	public Collection<GruposUsuariosEntity> getGruposUsuariosEntity() {
+		return gruposUsuariosEntity;
+	}
+	/**
+	 * @param gruposUsuariosEntity the gruposUsuariosEntity to set
+	 */
+	public void setGruposUsuariosEntity(Collection<GruposUsuariosEntity> gruposUsuariosEntity) {
+		this.gruposUsuariosEntity = gruposUsuariosEntity;
 	}
 	
 }

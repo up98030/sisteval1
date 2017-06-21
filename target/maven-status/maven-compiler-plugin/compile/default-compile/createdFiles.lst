@@ -9,6 +9,7 @@ servicio\NotasServicio.class
 controllers\UsuariosController.class
 entity\TiposTareasEntity.class
 controllers\TareasController.class
+controllers\ReportesController.class
 controllers\LoginController.class
 ec\com\data\vo\CriteriosVO.class
 util\CORSFilter.class
@@ -23,6 +24,7 @@ ec\com\ups\sistEval1\App.class
 controllers\NotasController.class
 ec\com\data\vo\IdUsuarioVO.class
 entity\TareasEntity.class
+ec\com\data\vo\ReporteVO.class
 ec\com\data\vo\UserSummaryVO.class
 entity\GruposUsuariosEntity.class
 entity\StudentEntity.class

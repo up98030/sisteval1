@@ -1,6 +1,52 @@
 package controllers;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+
+//import entity.TareasUsuariosEntity;
+
 public class Test {
+	
+//	@org.junit.Test
+	public void reporte(){
+		try{
+//			ObjectMapper mapper = new ObjectMapper(); 
+//			ReporteVO reporteObj = mapper.readValue(reporteData, ReporteVO.class);
+			Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+			
+			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
+			srb.applySettings(cf.getProperties());
+			ServiceRegistry sr = srb.buildServiceRegistry();
+			SessionFactory sf = cf.buildSessionFactory(sr);
+
+			Session session = sf.openSession();
+			
+			StringBuilder hql = new StringBuilder();
+
+			hql.append("SELECT TARUSU FROM entity.TareasUsuariosEntity TARUSU ");
+			hql.append("LEFT JOIN TARUSU.tareasEntity TAR ");
+			hql.append("LEFT JOIN TARUSU.usuariosEntity USU ");
+			hql.append("LEFT JOIN USU.gruposUsuariosEntity GRUPUSU ");
+			hql.append("LEFT JOIN TAR.tiposTareasEntity TIPTAR ");
+			hql.append("WHERE TARUSU.estado IN ('CLF','ENV') ");
+			hql.append("AND GRUPUSU.idGrupoUsuario IN (4,5,6,7) ");
+			hql.append("AND TIPTAR.idTiposTareas IN (1,2) ");
+			hql.append("AND TAR.estado = 'ACT' ");
+			
+			Query query = session.createQuery(hql.toString());
+
+//			Collection<TareasUsuariosEntity> reporteTareasUsuarios = (Collection<TareasUsuariosEntity>) query.list();
+			
+//			String reporte = new Gson().toJson(reporteTareasUsuarios);
+//			System.out.println(reporte);
+		}catch(Exception e){
+			System.out.println("Error : " + e);
+		}
+	}
 	
 //	@org.junit.Test
 //	public void consultaNotas(){

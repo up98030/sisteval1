@@ -59,6 +59,10 @@ public class TareasEntity {
     
     @Column(name = "idPeriodo")
     private Integer idPeriodo;
+    
+    @ManyToOne
+	@JoinColumn(name = "idTipoTarea", referencedColumnName = "idTiposTareas", insertable = false, updatable = false)
+	TiposTareasEntity tiposTareasEntity;
 
 	public Integer getIdTarea() {
 		return idTarea;
@@ -180,6 +184,20 @@ public class TareasEntity {
 	 */
 	public void setIdPeriodo(Integer idPeriodo) {
 		this.idPeriodo = idPeriodo;
+	}
+
+	/**
+	 * @return the tiposTareasEntity
+	 */
+	public TiposTareasEntity getTiposTareasEntity() {
+		return tiposTareasEntity;
+	}
+
+	/**
+	 * @param tiposTareasEntity the tiposTareasEntity to set
+	 */
+	public void setTiposTareasEntity(TiposTareasEntity tiposTareasEntity) {
+		this.tiposTareasEntity = tiposTareasEntity;
 	}
 	
 }

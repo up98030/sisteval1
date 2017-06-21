@@ -1,15 +1,13 @@
 package entity;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,18 +40,24 @@ public class UsuariosEntity {
 
 	@Column(name = "idModulo")
 	private Integer idModulo;
-	
-//	@OneToMany(mappedBy="UsuariosEntity")
-//    private Collection<GruposUsuariosEntity> gruposUsuariosEntity;
 
-//	public void setStockDailyRecords(Set<StockDailyRecord> stockDailyRecords) {
-//		this.stockDailyRecords = stockDailyRecords;
-//	}
-//	
-//
-//	@OneToMany
+//	@ManyToOne
 //	@JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", insertable = false, updatable = false)
 //	GruposUsuariosEntity gruposUsuariosEntity;
+
+	 @OneToMany(mappedBy="usuariosEntity")
+	 private Set<GruposUsuariosEntity> gruposUsuariosEntity;
+
+	// public void setStockDailyRecords(Set<StockDailyRecord> stockDailyRecords)
+	// {
+	// this.stockDailyRecords = stockDailyRecords;
+	// }
+	//
+	//
+	// @OneToMany
+	// @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario",
+	// insertable = false, updatable = false)
+	// GruposUsuariosEntity gruposUsuariosEntity;
 
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -119,18 +123,33 @@ public class UsuariosEntity {
 		this.idModulo = idModulo;
 	}
 
-//	/**
-//	 * @return the gruposUsuariosEntity
-//	 */
-//	public Collection<GruposUsuariosEntity> getGruposUsuariosEntity() {
-//		return gruposUsuariosEntity;
-//	}
-//
-//	/**
-//	 * @param gruposUsuariosEntity the gruposUsuariosEntity to set
-//	 */
-//	public void setGruposUsuariosEntity(Collection<GruposUsuariosEntity> gruposUsuariosEntity) {
-//		this.gruposUsuariosEntity = gruposUsuariosEntity;
-//	}
+	/**
+	 * @return the gruposUsuariosEntity
+	 */
+	public Set<GruposUsuariosEntity> getGruposUsuariosEntity() {
+		return gruposUsuariosEntity;
+	}
 
+	/**
+	 * @param gruposUsuariosEntity the gruposUsuariosEntity to set
+	 */
+	public void setGruposUsuariosEntity(Set<GruposUsuariosEntity> gruposUsuariosEntity) {
+		this.gruposUsuariosEntity = gruposUsuariosEntity;
+	}
+
+	// /**
+	// * @return the gruposUsuariosEntity
+	// */
+	// public Collection<GruposUsuariosEntity> getGruposUsuariosEntity() {
+	// return gruposUsuariosEntity;
+	// }
+	//
+	// /**
+	// * @param gruposUsuariosEntity the gruposUsuariosEntity to set
+	// */
+	// public void setGruposUsuariosEntity(Collection<GruposUsuariosEntity>
+	// gruposUsuariosEntity) {
+	// this.gruposUsuariosEntity = gruposUsuariosEntity;
+	// }
+	
 }

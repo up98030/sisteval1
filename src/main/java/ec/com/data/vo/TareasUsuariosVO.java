@@ -18,6 +18,7 @@ public class TareasUsuariosVO {
 	private UsuariosEntity usuariosEntity;
 	private String archivoAdjunto;
     private byte[] ArchivoEnviado;
+    private String base64File;
 
 
 	public String getObservacionesDocente() {
@@ -99,6 +100,17 @@ public class TareasUsuariosVO {
 	public void setArchivoEnviado(byte[] archivoEnviado) {
 		ArchivoEnviado = archivoEnviado;
 	}
-	
+	/**
+	 * @return the base64File
+	 */
+	public String getBase64File() {
+		return base64File;
+	}
+	/**
+	 * @param base64File the base64File to set
+	 */
+	public void setBase64File(String base64File) {
+		this.base64File = base64File;
+	}
 
 }
