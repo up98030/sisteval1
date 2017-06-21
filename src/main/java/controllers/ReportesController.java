@@ -88,9 +88,10 @@ public class ReportesController {
 				}
 				hql.append("AND USU.idUsuario IN " + arregloIdUsuarios);
 			}
-
+			
 			Query query = session.createQuery(hql.toString());
-
+			query.setparameter
+			
 			Collection<TareasUsuariosEntity> reporteTareasUsuarios = (Collection<TareasUsuariosEntity>) query.list();
 
 			String reporte = new Gson().toJson(reporteTareasUsuarios);
