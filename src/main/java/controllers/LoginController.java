@@ -153,6 +153,7 @@ public class LoginController {
 			// usuario = query.list();
 
 			if (!(usuario == null)) {
+				usuario.setGruposUsuariosEntity(null);
 				datosUsuario = new Gson().toJson(usuario);
 				return new ResponseEntity<String>(datosUsuario, HttpStatus.OK);
 			} else {

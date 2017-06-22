@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,6 +53,9 @@ public class ReportesController {
 			Integer arregloIdUsuarios[]  = null;
 			Integer arregloIdModulos[]  = null;
 			Integer arregloIdCategorias[]  = null;
+			List<Integer> idsUsuarios = new ArrayList<Integer>();
+			List<Integer> idsModulos = new ArrayList<Integer>();
+			List<Integer> idsCategorias = new ArrayList<Integer>();
 
 			hql.append("SELECT TARUSU FROM entity.TareasUsuariosEntity TARUSU ");
 			hql.append("LEFT JOIN TARUSU.tareasEntity TAR ");
@@ -63,10 +68,12 @@ public class ReportesController {
 				int a = 0;
 				arregloIdModulos = new Integer[reporteObj.getGrupos().size()];
 				for(ModulosEntity modulo : reporteObj.getGrupos()){
+					idsModulos.add(modulo.getIdModulo());
 					arregloIdModulos[a] = modulo.getIdModulo();
 					a++;
 				}
-				hql.append("AND GRUPUSU.idModulo IN " + arregloIdModulos);
+//				hql.append("AND GRUPUSU.idModulo IN " + arregloIdModulos);
+				hql.append("AND GRUPUSU.idModulo IN (:modulos) " );
 
 			}
 			if (!CollectionUtils.isEmpty(reporteObj.getCategorias())) {
@@ -74,9 +81,11 @@ public class ReportesController {
 				arregloIdCategorias = new Integer[reporteObj.getCategorias().size()];
 				for(TiposTareasEntity categoria : reporteObj.getCategorias()){
 					arregloIdCategorias[b] = categoria.getIdTiposTareas();
+					idsCategorias.add(categoria.getIdTiposTareas());
 					b++;
 				}
-				hql.append("AND TIPTAR.idTiposTareas IN " + arregloIdCategorias);
+//				hql.append("AND TIPTAR.idTiposTareas IN " + arregloIdCategorias);
+				hql.append("AND TIPTAR.idTiposTareas IN (:categorias) ");
 
 			}
 			if (!CollectionUtils.isEmpty(reporteObj.getUsuarios())) {
@@ -84,13 +93,23 @@ public class ReportesController {
 				arregloIdUsuarios = new Integer[reporteObj.getUsuarios().size()];
 				for(UsuariosEntity usuario : reporteObj.getUsuarios()){
 					arregloIdUsuarios[x] = usuario.getIdUsuario();
+					idsUsuarios.add(usuario.getIdUsuario());
 					x++;
 				}
-				hql.append("AND USU.idUsuario IN " + arregloIdUsuarios);
+//				hql.append("AND USU.idUsuario IN " + arregloIdUsuarios);
+				hql.append("AND USU.idUsuario IN (:usuarios)" );
 			}
 			
 			Query query = session.createQuery(hql.toString());
-			query.setparameter
+			if (!CollectionUtils.isEmpty(reporteObj.getGrupos())) {
+				query.setParameterList("modulos", idsModulos);
+			}
+			if (!CollectionUtils.isEmpty(reporteObj.getCategorias())) {
+				query.setParameterList("categorias", idsCategorias);
+			}			
+			if (!CollectionUtils.isEmpty(reporteObj.getUsuarios())) {
+				query.setParameterList("usuarios", idsUsuarios);
+			}			
 			
 			Collection<TareasUsuariosEntity> reporteTareasUsuarios = (Collection<TareasUsuariosEntity>) query.list();
 
