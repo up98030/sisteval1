@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author M1155
@@ -63,6 +64,9 @@ public class TareasEntity {
     @ManyToOne
 	@JoinColumn(name = "idTipoTarea", referencedColumnName = "idTiposTareas", insertable = false, updatable = false)
 	TiposTareasEntity tiposTareasEntity;
+    
+    @Transient
+	 private Double promedio;
 
 	public Integer getIdTarea() {
 		return idTarea;
@@ -198,6 +202,20 @@ public class TareasEntity {
 	 */
 	public void setTiposTareasEntity(TiposTareasEntity tiposTareasEntity) {
 		this.tiposTareasEntity = tiposTareasEntity;
+	}
+
+	/**
+	 * @return the promedio
+	 */
+	public Double getPromedio() {
+		return promedio;
+	}
+
+	/**
+	 * @param promedio the promedio to set
+	 */
+	public void setPromedio(Double promedio) {
+		this.promedio = promedio;
 	}
 	
 }

@@ -62,7 +62,7 @@ public class TareasUsuariosEntity {
 	 
 	 @Transient
 	 private String base64File;
-
+	 
 	public Integer getIdTareaUsuario() {
 		return idTareaUsuario;
 	}
@@ -179,6 +179,5 @@ public class TareasUsuariosEntity {
 	public void setGruposUsuariosEntity(Collection<GruposUsuariosEntity> gruposUsuariosEntity) {
 		this.gruposUsuariosEntity = gruposUsuariosEntity;
 	}
-	
 	
 }

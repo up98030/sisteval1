@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 
 import ec.com.data.vo.ReporteVO;
 import entity.ModulosEntity;
+import entity.TareasEntity;
 import entity.TareasUsuariosEntity;
 import entity.TiposTareasEntity;
 import entity.UsuariosEntity;
@@ -50,53 +52,48 @@ public class ReportesController {
 			Session session = sf.openSession();
 
 			StringBuilder hql = new StringBuilder();
-			Integer arregloIdUsuarios[]  = null;
-			Integer arregloIdModulos[]  = null;
-			Integer arregloIdCategorias[]  = null;
 			List<Integer> idsUsuarios = new ArrayList<Integer>();
 			List<Integer> idsModulos = new ArrayList<Integer>();
 			List<Integer> idsCategorias = new ArrayList<Integer>();
+			List<Integer> idsTareas = new ArrayList<Integer>();
 
-			hql.append("SELECT TARUSU FROM entity.TareasUsuariosEntity TARUSU ");
+			hql.append("SELECT DISTINCT TARUSU FROM entity.TareasUsuariosEntity TARUSU ");
 			hql.append("LEFT JOIN TARUSU.tareasEntity TAR ");
 			hql.append("LEFT JOIN TARUSU.usuariosEntity USU ");
 			hql.append("LEFT JOIN USU.gruposUsuariosEntity GRUPUSU ");
 			hql.append("LEFT JOIN TAR.tiposTareasEntity TIPTAR ");
 			hql.append("WHERE TAR.estado = 'ACT' ");
-			hql.append("AND TARUSU.estado IN ('ENV','CLF') ");
+			if(StringUtils.isEmpty(reporteObj.getEstado())){
+				hql.append("AND TARUSU.estado IN ('ENV','CLF') ");
+			}else{
+				hql.append("AND TARUSU.estado = '" + reporteObj.getEstado() + "'");
+			}
 			if (!CollectionUtils.isEmpty(reporteObj.getGrupos())) {
-				int a = 0;
-				arregloIdModulos = new Integer[reporteObj.getGrupos().size()];
 				for(ModulosEntity modulo : reporteObj.getGrupos()){
 					idsModulos.add(modulo.getIdModulo());
-					arregloIdModulos[a] = modulo.getIdModulo();
-					a++;
 				}
-//				hql.append("AND GRUPUSU.idModulo IN " + arregloIdModulos);
 				hql.append("AND GRUPUSU.idModulo IN (:modulos) " );
+//				hql.append("AND TAR.idModulo IN (:modulos) " );
 
 			}
 			if (!CollectionUtils.isEmpty(reporteObj.getCategorias())) {
-				int b = 0;
-				arregloIdCategorias = new Integer[reporteObj.getCategorias().size()];
 				for(TiposTareasEntity categoria : reporteObj.getCategorias()){
-					arregloIdCategorias[b] = categoria.getIdTiposTareas();
 					idsCategorias.add(categoria.getIdTiposTareas());
-					b++;
 				}
-//				hql.append("AND TIPTAR.idTiposTareas IN " + arregloIdCategorias);
 				hql.append("AND TIPTAR.idTiposTareas IN (:categorias) ");
 
 			}
-			if (!CollectionUtils.isEmpty(reporteObj.getUsuarios())) {
-				int x = 0;
-				arregloIdUsuarios = new Integer[reporteObj.getUsuarios().size()];
-				for(UsuariosEntity usuario : reporteObj.getUsuarios()){
-					arregloIdUsuarios[x] = usuario.getIdUsuario();
-					idsUsuarios.add(usuario.getIdUsuario());
-					x++;
+			if (!CollectionUtils.isEmpty(reporteObj.getTareas())) {
+				for(TareasEntity tarea : reporteObj.getTareas()){
+					idsTareas.add(tarea.getIdTarea());
 				}
-//				hql.append("AND USU.idUsuario IN " + arregloIdUsuarios);
+				hql.append("AND TAR.idTarea IN (:tareas) ");
+				
+			}
+			if (!CollectionUtils.isEmpty(reporteObj.getUsuarios())) {
+				for(UsuariosEntity usuario : reporteObj.getUsuarios()){
+					idsUsuarios.add(usuario.getIdUsuario());
+				}
 				hql.append("AND USU.idUsuario IN (:usuarios)" );
 			}
 			
@@ -110,14 +107,53 @@ public class ReportesController {
 			if (!CollectionUtils.isEmpty(reporteObj.getUsuarios())) {
 				query.setParameterList("usuarios", idsUsuarios);
 			}			
-			
+			if (!CollectionUtils.isEmpty(reporteObj.getTareas())) {
+				query.setParameterList("tareas", idsTareas);
+			}			
+			Double promedio = 0D;
 			Collection<TareasUsuariosEntity> reporteTareasUsuarios = (Collection<TareasUsuariosEntity>) query.list();
+			if(reporteObj.getUsuarios().size() == 1){
+				for(TareasUsuariosEntity tarea : reporteTareasUsuarios){
+					promedio += tarea.getCalificacion();
+				}
+				promedio = promedio/reporteTareasUsuarios.size();				
+			}
+			for(TareasUsuariosEntity tarea : reporteTareasUsuarios){
+				tarea.setGruposUsuariosEntity(null);
+				tarea.getUsuariosEntity().setGruposUsuariosEntity(null);
+				tarea.getTareasEntity().setPromedio(promedio);
+			}
 
 			String reporte = new Gson().toJson(reporteTareasUsuarios);
 			return new ResponseEntity<String>(reporte, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Error al crear reporte ", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/tareasActivas/", method = RequestMethod.GET)
+	public ResponseEntity<String> listAllTareas(HttpServletResponse response) {
+		Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+		try{
+			ServiceRegistryBuilder srb = new ServiceRegistryBuilder();
+			srb.applySettings(cf.getProperties());
+			ServiceRegistry sr = srb.buildServiceRegistry();
+			SessionFactory sf = cf.buildSessionFactory(sr);
+
+			Session session = sf.openSession();
+			
+			StringBuilder hql = new StringBuilder();
+			hql.append("SELECT DISTINCT TAR FROM entity.TareasEntity TAR ");
+			hql.append("WHERE TAR.estado = 'ACT'");
+			Query query = session.createQuery(hql.toString());
+			Collection<TareasEntity> tareasUsuarios = (Collection<TareasEntity>) query.list();
+			String tareas = new Gson().toJson(tareasUsuarios);
+			return new ResponseEntity<String>(tareas, HttpStatus.OK);
+		}catch(Exception e){
+			return new ResponseEntity<String>("Error obtener lista tareas ", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

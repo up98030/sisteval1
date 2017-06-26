@@ -90,6 +90,10 @@ public class NotasController {
 				projections.add(Projections.property("FechaEnvio"),"tareasUsuariosEntity.FechaEnvio");
 				
 				Collection<TareasUsuariosEntity> tareas = (Collection<TareasUsuariosEntity>) criteria.list();
+				for(TareasUsuariosEntity tarea : tareas){
+					tarea.setGruposUsuariosEntity(null);
+					tarea.setUsuariosEntity(null);
+				}
 			     String json = new Gson().toJson(tareas);
 			     
 			     session.close();

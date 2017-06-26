@@ -90,6 +90,9 @@ public class TareasController {
 			Collection<UsuariosEntity> listaUsuariosModulo = (Collection<UsuariosEntity>) query.list();
 
 			if (listaUsuariosModulo != null) {
+				for(UsuariosEntity usuario : listaUsuariosModulo){
+					usuario.setGruposUsuariosEntity(null);
+				}
 				usuariosModulo = new Gson().toJson(listaUsuariosModulo);
 				return new ResponseEntity<String>(usuariosModulo, HttpStatus.OK);
 			} else {
@@ -231,6 +234,8 @@ public class TareasController {
 			for(TareasUsuariosEntity tarea : tareas){
 				
 				tarea.setBase64File(Base64.encodeBase64String(tarea.getTareasEntity().getArchivoAdjunto()));
+				tarea.setGruposUsuariosEntity(null);
+				tarea.setUsuariosEntity(null);
 			}
 			String json = new Gson().toJson(tareas);
 
